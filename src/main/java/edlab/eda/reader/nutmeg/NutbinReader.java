@@ -1,8 +1,9 @@
-package edlab.eda.parsers.nutmeg;
+package edlab.eda.reader.nutmeg;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.apache.commons.math3.complex.Complex;
@@ -102,6 +103,10 @@ public class NutbinReader extends NutReader {
     NutmegRealPlot nutmegRealPlot;
     NutmegComplexPlot nutmegComplexPlot;
 
+    HashMap<String, String> units;
+    HashMap<String, double[]> realWaves;
+    HashMap<String, Complex[]> complexWaves;
+
     FLAG flag = FLAG.NONE;
 
     while ((idx = getNextPos(data, idx, PLOT_ID)) > 0) {
@@ -200,13 +205,14 @@ public class NutbinReader extends NutReader {
 
           if (flag == FLAG.REAL) {
 
-            nutmegRealPlot = new NutmegRealPlot(plotname, noOfVars, noOfPoints);
+            units = new HashMap<String, String>();
+            realWaves = new HashMap<String, double[]>();
 
             for (int i = 0; i < noOfVars; i++) {
 
               realWave = new double[noOfPoints];
 
-              nutmegRealPlot.addUnit(varNames[i], varUnit[i]);
+              units.put(varNames[i], varUnit[i]);
 
               for (int j = 0; j < noOfPoints; j++) {
                 realWave[j] = ByteBuffer.wrap(data,
@@ -214,23 +220,28 @@ public class NutbinReader extends NutReader {
                     BYTES_PER_NUM).getDouble();
               }
 
-              nutmegRealPlot.addData(varNames[i], realWave);
+              realWaves.put(varNames[i], realWave);
             }
 
-            plots.add(nutmegRealPlot);
+            nutmegRealPlot = NutmegRealPlot.make(plotname, noOfVars, noOfPoints,
+                units, realWaves);
+
+            if (nutmegRealPlot != null) {
+              plots.add(nutmegRealPlot);
+            }
 
             idx += 1 * noOfPoints * noOfVars * BYTES_PER_NUM + 1;
 
           } else {
 
-            nutmegComplexPlot = new NutmegComplexPlot(plotname, noOfVars,
-                noOfPoints + 1);
+            units = new HashMap<String, String>();
+            complexWaves = new HashMap<String, Complex[]>();
 
             for (int i = 0; i < noOfVars; i++) {
 
               complexWave = new Complex[noOfPoints];
 
-              nutmegComplexPlot.addUnit(varNames[i], varUnit[i]);
+              units.put(varNames[i], varUnit[i]);
 
               for (int j = 0; j < noOfPoints; j++) {
                 complex = new Complex(
@@ -248,10 +259,15 @@ public class NutbinReader extends NutReader {
                 complexWave[j] = complex;
               }
 
-              nutmegComplexPlot.addData(varNames[i], complexWave);
+              complexWaves.put(varNames[i], complexWave);
             }
 
-            plots.add(nutmegComplexPlot);
+            nutmegComplexPlot = NutmegComplexPlot.make(plotname, noOfVars,
+                noOfPoints, units, complexWaves);
+
+            if (nutmegComplexPlot != null) {
+              plots.add(nutmegComplexPlot);
+            }
 
             idx += 2 * noOfPoints * noOfVars * BYTES_PER_NUM + 1;
           }

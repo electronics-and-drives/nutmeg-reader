@@ -1,4 +1,4 @@
-package edlab.eda.parsers.nutmeg;
+package edlab.eda.reader.nutmeg;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -21,7 +21,7 @@ public abstract class NutReader {
   protected static final String COMPLEX_ID = "complex";
 
   /**
-   * Create a new {@link edlab.eda.parsers.nutmeg.NutReader NutReader}
+   * Create a new {@link edlab.eda.reader.nutmeg.NutReader NutReader}
    * 
    * @param file - nutmeg waveform
    */
@@ -62,7 +62,7 @@ public abstract class NutReader {
   }
 
   /**
-   * Creates a {@link edlab.eda.parsers.nutmeg.NutReader NutReader} of a nutmeg
+   * Creates a {@link edlab.eda.reader.nutmeg.NutReader NutReader} of a nutmeg
    * waveform file in ASCII syntax.
    * 
    * @param file - waveform file
@@ -74,7 +74,7 @@ public abstract class NutReader {
   }
 
   /**
-   * Creates a {@link edlab.eda.parsers.nutmeg.NutReader NutReader} of a nutmeg
+   * Creates a {@link edlab.eda.reader.nutmeg.NutReader NutReader} of a nutmeg
    * waveform file in binary syntax.
    * 
    * @param file - waveform file

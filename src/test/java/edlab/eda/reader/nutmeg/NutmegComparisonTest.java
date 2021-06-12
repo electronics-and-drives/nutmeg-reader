@@ -1,15 +1,10 @@
-package edlab.eda.adam.parsers.nutmeg;
+package edlab.eda.reader.nutmeg;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-
-import edlab.eda.parsers.nutmeg.NutReader;
-import edlab.eda.parsers.nutmeg.NutmegComplexPlot;
-import edlab.eda.parsers.nutmeg.NutmegPlot;
-import edlab.eda.parsers.nutmeg.NutmegRealPlot;
 
 class NutmegComparisonTest {
   private static final double ERROR = 1e-14;
@@ -46,11 +41,11 @@ class NutmegComparisonTest {
         ascciRealPlot = (NutmegRealPlot) asciiPlots.get(i);
         binRealPlot = (NutmegRealPlot) binPlots.get(i);
 
-        for (String var : ascciRealPlot.getKeys()) {
+        for (String var : ascciRealPlot.getWaves()) {
           for (int j = 0; j < ascciRealPlot.getNoOfPoints(); j++) {
 
-            a = ascciRealPlot.getData(var)[j];
-            b = binRealPlot.getData(var)[j];
+            a = ascciRealPlot.getWave(var)[j];
+            b = binRealPlot.getWave(var)[j];
             c = Math.abs(a - b);
             d = Math.max(Math.max(Math.abs(a), Math.abs(b)), 1.0);
 
@@ -69,11 +64,11 @@ class NutmegComparisonTest {
         ascciComplexPlot = (NutmegComplexPlot) asciiPlots.get(i);
         binComplexPlot = (NutmegComplexPlot) binPlots.get(i);
 
-        for (String var : ascciComplexPlot.getKeys()) {
+        for (String var : ascciComplexPlot.getWaves()) {
           for (int j = 0; j < ascciComplexPlot.getNoOfPoints(); j++) {
 
-            a = ascciComplexPlot.getData(var)[j].getReal();
-            b = binComplexPlot.getData(var)[j].getReal();
+            a = ascciComplexPlot.getWave(var)[j].getReal();
+            b = binComplexPlot.getWave(var)[j].getReal();
             c = Math.abs(a - b);
             d = Math.max(Math.max(Math.abs(a), Math.abs(b)), 1.0);
 
@@ -84,8 +79,8 @@ class NutmegComparisonTest {
                   + " and binary.real=" + b + "is greater than " + ERROR);
             }
 
-            a = ascciComplexPlot.getData(var)[j].getImaginary();
-            b = binComplexPlot.getData(var)[j].getImaginary();
+            a = ascciComplexPlot.getWave(var)[j].getImaginary();
+            b = binComplexPlot.getWave(var)[j].getImaginary();
             c = Math.abs(a - b);
             d = Math.max(Math.max(Math.abs(a), Math.abs(b)), 1.0);
 
@@ -100,5 +95,4 @@ class NutmegComparisonTest {
       }
     }
   }
-
 }

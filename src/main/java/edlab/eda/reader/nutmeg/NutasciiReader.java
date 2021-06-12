@@ -1,6 +1,7 @@
-package edlab.eda.parsers.nutmeg;
+package edlab.eda.reader.nutmeg;
 
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -80,6 +81,10 @@ public class NutasciiReader extends NutReader {
     NutmegRealPlot nutmegRealPlot;
     NutmegComplexPlot nutmegComplexPlot;
 
+    HashMap<String, String> units;
+    HashMap<String, double[]> realWaves;
+    HashMap<String, Complex[]> complexWaves;
+
     // Iterate until no new plots are in file
     while ((plotname = getNextPlot()) != null) {
 
@@ -95,31 +100,41 @@ public class NutasciiReader extends NutReader {
 
           if (flag.equals(FLAG.REAL)) {
 
+            units = new HashMap<String, String>();
+            realWaves = new HashMap<String, double[]>();
+
             realVals = readDoubleValues(noOfPoints, noOfVariables);
 
-            nutmegRealPlot = new NutmegRealPlot(plotname, noOfVariables,
-                noOfPoints);
-
             for (int i = 0; i < variables.length; i++) {
-              nutmegRealPlot.addUnit(variables[i][0], variables[i][1]);
-              nutmegRealPlot.addData(variables[i][0], realVals[i]);
+              units.put(variables[i][0], variables[i][1]);
+              realWaves.put(variables[i][0], realVals[i]);
             }
 
-            this.plots.addLast(nutmegRealPlot);
+            nutmegRealPlot = NutmegRealPlot.make(plotname, noOfVariables,
+                noOfPoints, units, realWaves);
+
+            if (nutmegRealPlot != null) {
+              this.plots.addLast(nutmegRealPlot);
+            }
 
           } else if (flag.equals(FLAG.COMPLEX)) {
 
+            units = new HashMap<String, String>();
+            complexWaves = new HashMap<String, Complex[]>();
+
             complexVals = readComplexValues(noOfPoints, noOfVariables);
 
-            nutmegComplexPlot = new NutmegComplexPlot(plotname, noOfVariables,
-                noOfPoints);
-
             for (int i = 0; i < variables.length; i++) {
-              nutmegComplexPlot.addUnit(variables[i][0], variables[i][1]);
-              nutmegComplexPlot.addData(variables[i][0], complexVals[i]);
+              units.put(variables[i][0], variables[i][1]);
+              complexWaves.put(variables[i][0], complexVals[i]);
             }
 
-            this.plots.addLast(nutmegComplexPlot);
+            nutmegComplexPlot = NutmegComplexPlot.make(plotname, noOfVariables,
+                noOfPoints, units, complexWaves);
+
+            if (nutmegComplexPlot != null) {
+              plots.add(nutmegComplexPlot);
+            }
           }
         }
       }
