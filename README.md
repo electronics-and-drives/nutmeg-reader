@@ -17,7 +17,32 @@ $ git clone https://github.com/electronics-and-drives/nutmeg-reader.git
 $ mvn install
 ```
 
+The repository will be installed to the directory
 
+```bash
+mvn help:evaluate -Dexpression=settings.localRepository | grep -v "^\[" 
+```
+
+You can retrieve the path to the JAR using the command
+
+```bash
+{
+  mvn help:evaluate -Dexpression=settings.localRepository | grep -v "^\[" ;
+  echo "/" ;
+  cat pom.xml | grep -oPm1 "(?<=<groupId>)[^<]+" | sed  's/\./\//g' ;
+  echo "/" ;
+  cat pom.xml | grep -oPm1 "(?<=<artifactId>)[^<]+" ;
+  echo "/" ;
+  cat pom.xml | grep -oPm1 "(?<=<version>)[^<]+" ;
+  echo "/";
+  cat pom.xml | grep --color=never -oPm1 "(?<=<artifactId>)[^<]+";
+  echo "-"; 
+  cat pom.xml | grep -oPm1 "(?<=<version>)[^<]+";
+  echo "-";
+  cat pom.xml | grep -oPm1 "(?<=<descriptorRef>)[^<]+";
+  echo ".jar"
+} | tr -d '\n' 
+```
 
 ## Setup
 
@@ -37,26 +62,51 @@ Import the corresponding package to your code
 import edlab.eda.reader.nutmeg.*;
 ```
 
-### MATLAB
-After installation of the Maven repository, the corresponding JAR is typically
-created at
+### MATLAB / Octave
 
+There are two variants how the JAR can be loaded in MATLAB / Octave.
+The first possibility is to run the commands
+
+```matlab
+javaaddpath('<PATH_TO_JAR>');
 ```
-~/.m2/repository/edlab/eda/reader/nutmeg/0.0.1/nutmeg-0.0.1-jar-with-dependencies.jar
+The second possibility is to add the path to the JAR to 
+the file *javaclasspath.txt* and place this file in the working directory
+of MATLAB (this is the directory where MATLAB is started).
+
+Additionally, the corresponding scripts must be added the the search-path of
+MATLAB
+
+```matlab
+addpath('<PATH_TO_REPOSITORY>/src/main/matlab/');
 ```
 
-Add the JAR to the Java [class path](https://de.mathworks.com/help/matlab/matlab_external/java-class-path.html) 
-Furthermore, add
-```
-<PATH To REPOSITORY>/src/main/matlab
-```
-to your [search-path](https://de.mathworks.com/help/matlab/search-path.html).
+Additional information can be found in the MATLAB and Octave Manuals
 
+- MATLAB
+ * [Java Class Path](https://de.mathworks.com/help/matlab/matlab_external/java-class-path.html) 
+ * [Search Path](https://de.mathworks.com/help/matlab/search-path.html) 
+- Octave
+ * [How to make Java classes available to Octave?](https://octave.org/doc/v4.0.1/How-to-make-Java-classes-available_003f.html) 
+ * [Manipulating the Load Path](https://octave.org/doc/v4.0.1/Manipulating-the-Load-Path.html) 
 
 ## API
 
+### Java
+
 The [JavaDoc](https://electronics-and-drives.github.io/nutmeg-reader/)
 is stored on the Github-Pages (branch *gh-pages*).
+
+### MATLAB / Octave
+Execute the commands
+```matlab
+help readNutascii
+```
+and
+```matlab
+help readNutbin
+```
+to get information how to call the functions in MATLAB / Octave.
 
 ## Example
 
@@ -111,25 +161,42 @@ if (nutmegPlot instanceof NutmegRealPlot) {
 
 ```matlab
 
-file = './src/test/resources/rc/nutbin.raw'
+file = './src/test/resources/rc/nutascii.raw'
 
 plots = readNutascii(file);
 
-plot(plots(3).waveData(:,4),plots(3).waveData(:,5),'LineWidth',2);
+plot(plots(4).waveData(:,4),plots(4).waveData(:,5),'LineWidth',2);
 
-xlabel(plots(3).waveNames(4) + ' (' + plots(3).waveUnits(4) + ')');
-ylabel(plots(3).waveNames(5) + ' (' + plots(3).waveUnits(5) + ')');
-title(plots(3).name);
-
+xlabel(plots(4).waveNames{4} + ' (' + plots(4).waveUnits{4} + ')');
+ylabel(plots(4).waveNames{5} + ' (' + plots(4).waveUnits{5} + ')');
+title(plots(4).name);
 ```
 
-![Transient Waveform](fig/plot.png)
+![](fig/plot_matlab.png)
+
+
+### Octave
+
+```matlab
+file = './src/test/resources/rc/nutascii.raw'
+
+plots = readNutascii(file);
+
+plot(plots(4).waveData(:,4),plots(4).waveData(:,5),'LineWidth',2);
+
+xlabel([plots(4).waveNames{4} ' (' plots(4).waveUnits{4} ')']);
+ylabel([plots(4).waveNames{5} ' (' plots(4).waveUnits{5} ')']);
+title(plots(4).name);
+```
+
+![](fig/plot_octave.png)
 
 ## TODO
 
 - [X] Test the reader for waveforms generated with Cadence Spectre
 - [ ] Test the reader for waveforms generated with Ngspice
-- [ ] Add Octave Interface
+- [x] Add Octave Interface
+- [ ] Add Python Interface
 
 ## License
 
