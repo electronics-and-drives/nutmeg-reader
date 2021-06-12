@@ -1,0 +1,15 @@
+//input.scs
+
+global 0
+
+save I O V0:p R1:1
+V0 (I 0) vsource type=dc mag=1 dc=1
+R0 (I O) resistor r=1k
+C0 (O 0) capacitor c=1p ic=0
+R1 (O 0) resistor r=1k
+
+options options rforce=1m bin_relref=yes
+
+dc dc
+ac ac start=1 stop=1G
+tran tran stop=10n
