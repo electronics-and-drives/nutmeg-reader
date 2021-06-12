@@ -1,4 +1,4 @@
-package edlab.eda.adam.parsers.nutmeg;
+package edlab.eda.parsers.nutmeg;
 
 import java.util.HashMap;
 import java.util.Map;

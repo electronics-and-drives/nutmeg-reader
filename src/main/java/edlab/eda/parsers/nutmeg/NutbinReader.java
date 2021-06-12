@@ -1,4 +1,4 @@
-package edlab.eda.adam.parsers.nutmeg;
+package edlab.eda.parsers.nutmeg;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -29,10 +29,46 @@ public class NutbinReader extends NutReader {
   private static final int START = 0;
   private static final int STOP = 1;
 
-  public NutbinReader(String file) {
+  /**
+   * @param file
+   */
+  private NutbinReader(String file) {
     super(file);
   }
 
+  /**
+   * @param file - file
+   * @return Nutreader
+   */
+  public static NutReader getNutReader(String file) {
+
+    NutReader nutReader = new NutbinReader(file);
+
+    if (nutReader.getFile() == null) {
+      return null;
+    } else {
+      return nutReader;
+    }
+  }
+
+  /**
+   *
+   */
+  @Override
+  public NutReader read() {
+    try {
+      this.data = Files.readAllBytes(getFile().toPath());
+      return this;
+    } catch (IOException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
+   *
+   */
+  @Override
   public NutReader parse() {
 
     int idx = 0;
@@ -225,6 +261,14 @@ public class NutbinReader extends NutReader {
     return this;
   }
 
+  /**
+   * Find the next occurrence of a newline character in a byte array starting
+   * from index start.
+   * 
+   * @param data  - array to be searched
+   * @param start - index from which on the data array is searched.
+   * @return - index in data where the pattern starts
+   */
   private static int jmpToNewline(byte[] data, int start) {
 
     int i = start;
@@ -236,7 +280,14 @@ public class NutbinReader extends NutReader {
     return i;
   }
 
-  
+  /**
+   * Finds the next occurrence of pattern in data starting from index start.
+   * 
+   * @param data    - array with data
+   * @param start   - index from which on the data array is searched.
+   * @param pattern - array with pattern to be searched.
+   * @return index - index in data where the pattern starts
+   */
   private static int getNextPos(byte[] data, int start, byte[] pattern) {
 
     int retval = -1;
@@ -269,16 +320,5 @@ public class NutbinReader extends NutReader {
     }
 
     return retval;
-  }
-
-  @Override
-  public NutReader read() {
-    try {
-      this.data = Files.readAllBytes(this.file.toPath());
-      return this;
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return null;
   }
 }

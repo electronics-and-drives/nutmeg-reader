@@ -1,4 +1,4 @@
-package edlab.eda.adam.parsers.nutmeg;
+package edlab.eda.parsers.nutmeg;
 
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
@@ -25,10 +25,43 @@ public class NutasciiReader extends NutReader {
   private Scanner scanner = null;
   private boolean scannerOpen = false;
 
-  public NutasciiReader(String file) {
+  private NutasciiReader(String file) {
     super(file);
   }
 
+  public static NutReader getNutReader(String file) {
+
+    NutReader nutReader = new NutasciiReader(file);
+
+    if (nutReader.getFile() == null) {
+      return null;
+    } else {
+      return nutReader;
+    }
+  }
+
+  @Override
+  public NutReader read() {
+
+    try {
+
+      Scanner scn = new Scanner(getFile());
+      scn.useDelimiter("\\Z");
+      data = scn.next();
+      scn.close();
+
+      return this;
+
+    } catch (FileNotFoundException e) {
+      System.err.println("Unable to open file " + getFile().getAbsolutePath()
+          + ":\n" + e.toString());
+
+      return null;
+    }
+
+  }
+
+  @Override
   public NutReader parse() {
 
     this.scanner = new Scanner(data);
@@ -330,28 +363,4 @@ public class NutasciiReader extends NutReader {
     return result;
   }
 
-  @Override
-  public NutReader read() {
-
-    if (this.file != null) {
-
-      try {
-
-        Scanner scn = new Scanner(this.file);
-        scn.useDelimiter("\\Z");
-        data = scn.next();
-        scn.close();
-
-        return this;
-
-      } catch (FileNotFoundException e) {
-        System.err
-            .println("Unable to open file " + file + ":\n" + e.toString());
-      }
-    } else {
-      System.err.println("File is null");
-    }
-
-    return null;
-  }
 }
