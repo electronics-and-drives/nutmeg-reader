@@ -65,7 +65,7 @@ import edlab.eda.reader.nutmeg.*;
 ### MATLAB / Octave
 
 There are two variants how the JAR can be loaded in MATLAB / Octave.
-The first possibility is to run the commands
+The first possibility is to run the command
 
 ```matlab
 javaaddpath('<PATH_TO_JAR>');
@@ -84,11 +84,11 @@ addpath('<PATH_TO_REPOSITORY>/src/main/matlab/');
 Additional information can be found in the MATLAB and Octave Manuals
 
 - MATLAB
- * [Java Class Path](https://de.mathworks.com/help/matlab/matlab_external/java-class-path.html) 
- * [Search Path](https://de.mathworks.com/help/matlab/search-path.html) 
+  * [Java Class Path](https://de.mathworks.com/help/matlab/matlab_external/java-class-path.html) 
+  * [Search Path](https://de.mathworks.com/help/matlab/search-path.html) 
 - Octave
- * [How to make Java classes available to Octave?](https://octave.org/doc/v4.0.1/How-to-make-Java-classes-available_003f.html) 
- * [Manipulating the Load Path](https://octave.org/doc/v4.0.1/Manipulating-the-Load-Path.html) 
+  * [How to make Java classes available to Octave?](https://octave.org/doc/v4.0.1/How-to-make-Java-classes-available_003f.html) 
+  * [Manipulating the Load Path](https://octave.org/doc/v4.0.1/Manipulating-the-Load-Path.html) 
 
 ## API
 
