@@ -1,5 +1,8 @@
 function plots = readNutbin (file)
-
+% readNutbin  Reads the contents of a Nutmeg file in binary syntax.
+%
+%   plots = readNutbin(file) reads the contents of 'file'.
+%
   if exist(file)==2
   
     obj=javaMethod('getNutbinReader', ...
