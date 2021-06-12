@@ -18,11 +18,11 @@ class NutmegComparisonTest {
     NutmegComplexPlot binComplexPlot;
 
     NutReader asciiReader = NutReader
-        .getNutasciiReader("./src/test/java/resources/rc/nutascii.raw");
+        .getNutasciiReader("./src/test/resources/rc/nutascii.raw");
     asciiReader.read().parse();
 
     NutReader binReader = NutReader
-        .getNutbinReader("./src/test/java/resources/rc/nutbin.raw");
+        .getNutbinReader("./src/test/resources/rc/nutbin.raw");
     binReader.read().parse();
 
     List<NutmegPlot> asciiPlots = asciiReader.getPlots();
