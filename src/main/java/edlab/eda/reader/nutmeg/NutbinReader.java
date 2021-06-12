@@ -8,6 +8,10 @@ import java.util.LinkedList;
 
 import org.apache.commons.math3.complex.Complex;
 
+/**
+ * Reader for a Nutmeg waveform file in binary syntax.
+ *
+ */
 public class NutbinReader extends NutReader {
 
   private byte[] data;
@@ -25,21 +29,25 @@ public class NutbinReader extends NutReader {
   private static final byte[] VALS_BINARY_ID = { 'B', 'i', 'n', 'a', 'r', 'y',
       ':', '\n' };
 
+  private static final byte NEWLINE = '\n';
+
   private static final int BYTES_PER_NUM = 8;
 
   private static final int START = 0;
   private static final int STOP = 1;
 
-  /**
-   * @param file
-   */
   private NutbinReader(String file) {
     super(file);
   }
 
-  /**
-   * @param file - file
-   * @return Nutreader
+  /*
+   * Creates a {@link edlab.eda.reader.nutmeg.NutReader NutReader} of a nutmeg
+   * waveform file in binary syntax.
+   * 
+   * @param file - path to waveform file
+   * 
+   * @return nutReader - Reader for the corresponding waveform, null when the
+   * file is not existing.
    */
   public static NutReader getNutReader(String file) {
 
@@ -52,9 +60,6 @@ public class NutbinReader extends NutReader {
     }
   }
 
-  /**
-   *
-   */
   @Override
   public NutReader read() {
     try {
@@ -66,9 +71,6 @@ public class NutbinReader extends NutReader {
     }
   }
 
-  /**
-   *
-   */
   @Override
   public NutReader parse() {
 
@@ -289,7 +291,7 @@ public class NutbinReader extends NutReader {
 
     int i = start;
 
-    while (data[i] != '\n' && i < data.length) {
+    while (data[i] != NEWLINE && i < data.length) {
       i++;
     }
 

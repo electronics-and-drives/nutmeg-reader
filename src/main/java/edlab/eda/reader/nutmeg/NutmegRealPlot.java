@@ -3,6 +3,10 @@ package edlab.eda.reader.nutmeg;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Plot consisting of real waveforms
+ *
+ */
 public class NutmegRealPlot extends NutmegPlot {
 
   private Map<String, double[]> waves;
@@ -13,6 +17,18 @@ public class NutmegRealPlot extends NutmegPlot {
     this.waves = waves;
   }
 
+  /**
+   * The method checks all parameters for consistency. When the parameters are
+   * valid, a {@link edlab.eda.reader.nutmeg.NutmegRealPlot NutmegRealPlot} is
+   * returned.
+   * 
+   * @param plotname      - Name of the plot
+   * @param noOfVariables - Number of variables
+   * @param noOfPoints    - Number of points
+   * @param units         - Units
+   * @param waves         - Waves
+   * @return nutmegRealPlot - Plot
+   */
   public static NutmegRealPlot make(String plotname, int noOfVariables,
       int noOfPoints, Map<String, String> units, Map<String, double[]> waves) {
 
@@ -65,6 +81,12 @@ public class NutmegRealPlot extends NutmegPlot {
     return this.waves.keySet();
   }
 
+  /**
+   * Returns a waveform with a given name.
+   * 
+   * @param wave - name of the wave
+   * @return wave - Wave as a double array if existing, null otherwise.
+   */
   public double[] getWave(String wave) {
     return this.waves.get(wave);
   }

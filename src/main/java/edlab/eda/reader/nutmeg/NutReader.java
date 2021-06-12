@@ -10,11 +10,29 @@ import java.util.List;
  */
 public abstract class NutReader {
 
+  /**
+   * List of plots
+   */
   protected LinkedList<NutmegPlot> plots;
   private File file;
 
+  /**
+   * Flag that indicated whether a waveform is real or complex.
+   *
+   */
   protected static enum FLAG {
-    REAL, COMPLEX, NONE
+    /**
+     * Waveform is real-valued.
+     */
+    REAL,
+    /**
+     * Waveform is complex-valued.
+     */
+    COMPLEX,
+    /**
+     * Unified waveform.
+     */
+    NONE
   };
 
   protected static final String REAL_ID = "real";
@@ -23,7 +41,7 @@ public abstract class NutReader {
   /**
    * Create a new {@link edlab.eda.reader.nutmeg.NutReader NutReader}
    * 
-   * @param file - nutmeg waveform
+   * @param file - nutmeg waveform file
    */
   protected NutReader(String file) {
     this.file = new File(file);
@@ -44,9 +62,9 @@ public abstract class NutReader {
   }
 
   /**
-   * Returns the waveform file.
+   * Returns the path to the waveform file.
    * 
-   * @return file - waveform file
+   * @return file - path to waveform file
    */
   public File getFile() {
     return this.file;
@@ -65,7 +83,7 @@ public abstract class NutReader {
    * Creates a {@link edlab.eda.reader.nutmeg.NutReader NutReader} of a nutmeg
    * waveform file in ASCII syntax.
    * 
-   * @param file - waveform file
+   * @param file - path to waveform file
    * @return nutReader - Reader for the corresponding waveform / null when the
    *         file is not existing
    */
@@ -77,7 +95,7 @@ public abstract class NutReader {
    * Creates a {@link edlab.eda.reader.nutmeg.NutReader NutReader} of a nutmeg
    * waveform file in binary syntax.
    * 
-   * @param file - waveform file
+   * @param file - path to waveform file
    * @return nutReader - Reader for the corresponding waveform, null when the
    *         file is not existing
    */

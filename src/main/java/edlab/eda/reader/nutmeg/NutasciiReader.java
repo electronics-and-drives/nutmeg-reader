@@ -7,6 +7,10 @@ import java.util.Scanner;
 
 import org.apache.commons.math3.complex.Complex;
 
+/**
+ * Reader for a Nutmeg waveform file in ASCII syntax.
+ *
+ */
 public class NutasciiReader extends NutReader {
 
   @SuppressWarnings("unused")
@@ -30,6 +34,14 @@ public class NutasciiReader extends NutReader {
     super(file);
   }
 
+  /**
+   * Creates a {@link edlab.eda.reader.nutmeg.NutReader NutReader} of a nutmeg
+   * waveform file in binary syntax.
+   * 
+   * @param file - path to waveform file
+   * @return nutReader - Reader for the corresponding waveform, null when the
+   *         file is not existing.
+   */
   public static NutReader getNutReader(String file) {
 
     NutReader nutReader = new NutasciiReader(file);
@@ -146,6 +158,11 @@ public class NutasciiReader extends NutReader {
     return this;
   }
 
+  /**
+   * Returns next plotname in the stream.
+   * 
+   * @return plotname
+   */
   private String getNextPlot() {
 
     if (scannerOpen) {
@@ -169,6 +186,11 @@ public class NutasciiReader extends NutReader {
     }
   }
 
+  /**
+   * Returns whether next plot in stream is complex or real.
+   * 
+   * @return flag
+   */
   private FLAG getFlag() {
 
     if (scannerOpen && scanner.hasNextLine()) {
@@ -196,6 +218,11 @@ public class NutasciiReader extends NutReader {
     }
   }
 
+  /**
+   * Finds the number of variables of the current plot in stream.
+   * 
+   * @return Number of Variables
+   */
   private int getNumberOfVariables() {
 
     if (scannerOpen && scanner.hasNextLine()) {
@@ -215,6 +242,11 @@ public class NutasciiReader extends NutReader {
     }
   }
 
+  /**
+   * Finds the number of points of the current plot in stream.
+   * 
+   * @return Number of Points
+   */
   private int getNumberOfPoints() {
 
     if (scannerOpen && scanner.hasNextLine()) {
@@ -235,6 +267,12 @@ public class NutasciiReader extends NutReader {
     }
   }
 
+  /**
+   * Read variables and units from steam.
+   * 
+   * @param noOfVariables - number of variables to be read.
+   * @return array of variable names and units.
+   */
   private String[][] getVariables(int noOfvariables) {
 
     String[] refracturedLine;
@@ -278,6 +316,13 @@ public class NutasciiReader extends NutReader {
     return variables;
   }
 
+  /**
+   * Read complex values from stream.
+   * 
+   * @param noOfPoints    - number of points to be read.
+   * @param noOfVariables - number of variables to be read.
+   * @return double array with values.
+   */
   private Complex[][] readComplexValues(int noOfPoints, int noOfVariables) {
 
     Complex[][] vals = new Complex[noOfVariables][noOfPoints];
@@ -322,6 +367,13 @@ public class NutasciiReader extends NutReader {
     return null;
   }
 
+  /**
+   * Read real values from stream.
+   * 
+   * @param noOfPoints    - number of points to be read.
+   * @param noOfVariables - number of variables to be read.
+   * @return double array with values.
+   */
   private double[][] readDoubleValues(int noOfPoints, int noOfVariables) {
 
     double[][] vals = new double[noOfVariables][noOfPoints];
@@ -359,6 +411,12 @@ public class NutasciiReader extends NutReader {
     }
   }
 
+  /**
+   * Read string elements from the stream
+   * 
+   * @param noOfElems - number of elements to be read from stream.
+   * @return array of strings.
+   */
   private String[] readAscii(int noOfElems) {
 
     String[] result = new String[noOfElems];
@@ -377,5 +435,4 @@ public class NutasciiReader extends NutReader {
     }
     return result;
   }
-
 }

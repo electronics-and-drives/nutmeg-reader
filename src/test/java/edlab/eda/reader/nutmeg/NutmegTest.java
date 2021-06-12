@@ -26,7 +26,7 @@ public class NutmegTest {
     nutmegPlot.getNoOfPoints();
 
     // Get number of variables from plot
-    nutmegPlot.getNoOfVariables();
+    nutmegPlot.getNoOfWaves();
 
     // Get set of all waves from plot
     Set<String> waves = nutmegPlot.getWaves();
