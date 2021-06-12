@@ -39,7 +39,8 @@ is stored on the Github-Pages (branch *gh-pages*).
 
 ## Example
 
-The below shown example shows how a 
+The below shown example shows how a waveform file can be accessed
+with *NutReader*.
 
 ```java
 // Create a new reader
@@ -90,7 +91,7 @@ if (nutmegPlot instanceof NutmegRealPlot) {
 
 ## License
 
-Copyright (C) 2021, Electronics & Drives Lab
+Copyright (C) 2021, [Electronics & Drives](https://www.electronics-and-drives.de/)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
