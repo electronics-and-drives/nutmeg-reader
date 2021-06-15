@@ -3,7 +3,7 @@ global 0
 
 parameters VI=1
 
-save I O V0:p R1:1
+save I O V0:p R1:1 R1:pwr R1:pwr
 V0 (I 0) vsource type=dc mag=1 dc=VI
 R0 (I O) resistor r=1k
 C0 (O 0) capacitor c=1p ic=0

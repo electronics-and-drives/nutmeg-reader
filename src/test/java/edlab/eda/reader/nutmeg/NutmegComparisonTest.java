@@ -12,23 +12,30 @@ class NutmegComparisonTest {
   @Test
   void test() {
 
+    compareWaves("./src/test/resources/rc1/nutascii.raw",
+        "./src/test/resources/rc1/nutbin.raw");
+    compareWaves("./src/test/resources/rc2/nutascii.raw",
+        "./src/test/resources/rc2/nutbin.raw");
+  }
+
+  private static void compareWaves(String nutascii, String nutbin) {
+
     NutmegRealPlot ascciRealPlot;
     NutmegRealPlot binRealPlot;
     NutmegComplexPlot ascciComplexPlot;
     NutmegComplexPlot binComplexPlot;
 
-    NutReader asciiReader = NutReader
-        .getNutasciiReader("./src/test/resources/rc/nutascii.raw");
+    NutReader asciiReader = NutReader.getNutasciiReader(nutascii);
     asciiReader.read().parse();
 
-    NutReader binReader = NutReader
-        .getNutbinReader("./src/test/resources/rc/nutbin.raw");
+    NutReader binReader = NutReader.getNutbinReader(nutbin);
     binReader.read().parse();
 
     List<NutmegPlot> asciiPlots = asciiReader.getPlots();
     List<NutmegPlot> binPlots = binReader.getPlots();
 
     if (asciiPlots.size() != binPlots.size()) {
+      System.out.println(asciiPlots.size() + "-" + binPlots.size());
       fail("Unequal number of plots");
     }
 
