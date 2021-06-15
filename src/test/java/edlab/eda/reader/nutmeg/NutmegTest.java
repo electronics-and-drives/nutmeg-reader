@@ -43,8 +43,8 @@ public class NutmegTest {
       NutmegRealPlot nutmegRealPlot = (NutmegRealPlot) nutmegPlot;
 
       // Get wave of wave with name "I"
+      @SuppressWarnings("unused")
       double[] wave = nutmegRealPlot.getWave("I");
     }
-
   }
 }

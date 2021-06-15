@@ -118,8 +118,13 @@ public class NutasciiReader extends NutReader {
             realVals = readDoubleValues(noOfPoints, noOfVariables);
 
             for (int i = 0; i < variables.length; i++) {
-              units.put(variables[i][0], variables[i][1]);
-              realWaves.put(variables[i][0], realVals[i]);
+
+              if (realWaves.containsKey(variables[i][0])) {
+                noOfVariables--;
+              } else {
+                units.put(variables[i][0], variables[i][1]);
+                realWaves.put(variables[i][0], realVals[i]);
+              }
             }
 
             nutmegRealPlot = NutmegRealPlot.make(plotname, noOfVariables,
@@ -137,8 +142,13 @@ public class NutasciiReader extends NutReader {
             complexVals = readComplexValues(noOfPoints, noOfVariables);
 
             for (int i = 0; i < variables.length; i++) {
-              units.put(variables[i][0], variables[i][1]);
-              complexWaves.put(variables[i][0], complexVals[i]);
+
+              if (complexWaves.containsKey(variables[i][0])) {
+                noOfVariables--;
+              } else {
+                units.put(variables[i][0], variables[i][1]);
+                complexWaves.put(variables[i][0], complexVals[i]);
+              }
             }
 
             nutmegComplexPlot = NutmegComplexPlot.make(plotname, noOfVariables,

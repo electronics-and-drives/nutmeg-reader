@@ -92,6 +92,8 @@ public class NutbinReader extends NutReader {
     int noOfPoints = 0;
     int noOfVars = 0;
 
+    int realNoOfVars;
+
     String[] varNames = null;
     String[] varUnit = null;
 
@@ -205,6 +207,8 @@ public class NutbinReader extends NutReader {
             noOfPoints = 1;
           }
 
+          realNoOfVars = noOfVars;
+
           if (flag == FLAG.REAL) {
 
             units = new HashMap<String, String>();
@@ -214,19 +218,22 @@ public class NutbinReader extends NutReader {
 
               realWave = new double[noOfPoints];
 
-              units.put(varNames[i], varUnit[i]);
-
               for (int j = 0; j < noOfPoints; j++) {
                 realWave[j] = ByteBuffer.wrap(data,
                     binaryStartIdx + (i + j * noOfVars) * BYTES_PER_NUM - 1,
                     BYTES_PER_NUM).getDouble();
               }
 
-              realWaves.put(varNames[i], realWave);
+              if (realWaves.containsKey(varNames[i])) {
+                realNoOfVars--;
+              } else {
+                realWaves.put(varNames[i], realWave);
+                units.put(varNames[i], varUnit[i]);
+              }
             }
 
-            nutmegRealPlot = NutmegRealPlot.make(plotname, noOfVars, noOfPoints,
-                units, realWaves);
+            nutmegRealPlot = NutmegRealPlot.make(plotname, realNoOfVars,
+                noOfPoints, units, realWaves);
 
             if (nutmegRealPlot != null) {
               plots.add(nutmegRealPlot);
@@ -242,8 +249,6 @@ public class NutbinReader extends NutReader {
             for (int i = 0; i < noOfVars; i++) {
 
               complexWave = new Complex[noOfPoints];
-
-              units.put(varNames[i], varUnit[i]);
 
               for (int j = 0; j < noOfPoints; j++) {
                 complex = new Complex(
@@ -261,10 +266,15 @@ public class NutbinReader extends NutReader {
                 complexWave[j] = complex;
               }
 
-              complexWaves.put(varNames[i], complexWave);
+              if (complexWaves.containsKey(varNames[i])) {
+                realNoOfVars--;
+              } else {
+                complexWaves.put(varNames[i], complexWave);
+                units.put(varNames[i], varUnit[i]);
+              }
             }
 
-            nutmegComplexPlot = NutmegComplexPlot.make(plotname, noOfVars,
+            nutmegComplexPlot = NutmegComplexPlot.make(plotname, realNoOfVars,
                 noOfPoints, units, complexWaves);
 
             if (nutmegComplexPlot != null) {

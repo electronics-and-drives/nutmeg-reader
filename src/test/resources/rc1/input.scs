@@ -1,0 +1,17 @@
+//input.scs
+global 0
+
+parameters VI=1
+
+save I O V0:p R1:1
+V0 (I 0) vsource type=dc mag=1 dc=VI
+R0 (I O) resistor r=1k
+C0 (O 0) capacitor c=1p ic=0
+R1 (O 0) resistor r=1k
+
+options options rforce=1m bin_relref=yes
+
+dc1 dc
+dc2 dc param=VI start=0 stop=10
+ac ac start=1 stop=1G
+tran tran stop=5n

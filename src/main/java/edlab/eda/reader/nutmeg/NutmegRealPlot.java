@@ -36,6 +36,7 @@ public class NutmegRealPlot extends NutmegPlot {
         noOfPoints, units, waves);
 
     if (noOfVariables != units.size()) {
+      System.out.println(noOfVariables + "-" + units.size());
       return null;
     }
 
