@@ -11,7 +11,7 @@ import org.apache.commons.math3.complex.Complex;
  */
 public class NutmegComplexPlot extends NutmegPlot {
 
-  public Map<String, Complex[]> waves;
+  private Map<String, Complex[]> waves;
 
   private NutmegComplexPlot(String plotname, int noOfVariables, int noOfPoints,
       Map<String, String> units, Map<String, Complex[]> waves) {
