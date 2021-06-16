@@ -33,7 +33,7 @@ function plots = readNutascii (file)
     obj=javaMethod('getNutasciiReader', ...
                    'edlab.eda.reader.nutmeg.NutReader',...
                    file);
-   dfdf
+                   
     plots = parseNutmeg(obj);
     
   else
