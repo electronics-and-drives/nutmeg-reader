@@ -106,6 +106,10 @@ public class NutasciiReader extends NutReader {
 
         noOfVariables = getNumberOfVariables();
         noOfPoints = getNumberOfPoints();
+        
+        if (noOfPoints == 0) {
+          noOfPoints = 1;
+        }
 
         if (noOfVariables > 0 && noOfPoints > 0) {
           variables = getVariables(noOfVariables);
