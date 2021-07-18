@@ -12,8 +12,8 @@ class NutmegComparisonTest {
   @Test
   void test() {
 
-    compareWaves("./src/test/resources/rc1/nutascii.raw",
-        "./src/test/resources/rc1/nutbin.raw");
+    compareWaves("./src/test/resources/rc1/spectre/nutascii.raw",
+        "./src/test/resources/rc1/spectre/nutbin.raw");
     compareWaves("./src/test/resources/rc2/nutascii.raw",
         "./src/test/resources/rc2/nutbin.raw");
   }

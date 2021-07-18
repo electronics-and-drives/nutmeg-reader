@@ -1,0 +1,17 @@
+.title rc-lowpass
+
+V0 I 0 1
+R0 I O 1k
+C0 O 0 1p
+R1 O 0 1k
+
+.dc
+.dc V0 0 10 1
+.ac dec 20 1 1G
+.tran 1p 5n
+
+.control
+run
+.print
+.endc
+.end

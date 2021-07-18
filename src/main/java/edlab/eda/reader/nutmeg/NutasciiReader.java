@@ -301,12 +301,15 @@ public class NutasciiReader extends NutReader {
         if (i == 0) {
 
           if (line.startsWith(VARS_ID)) {
-
             line = line.substring(VARS_ID.length(), line.length()).trim();
 
           } else {
             return null;
           }
+        }
+
+        if (line.length() == 0) {
+          line = scanner.nextLine();
         }
 
         refracturedLine = line.trim().split("\\s");

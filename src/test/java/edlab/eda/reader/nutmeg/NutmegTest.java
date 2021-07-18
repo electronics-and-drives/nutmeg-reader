@@ -8,7 +8,7 @@ public class NutmegTest {
 
     // Create a new reader
     NutReader reader = NutReader
-        .getNutasciiReader("./src/test/resources/rc1/nutascii.raw");
+        .getNutasciiReader("./src/test/resources/rc1/spectre/nutascii.raw");
 
     // Read and parse the nutascii
     reader.read().parse();
