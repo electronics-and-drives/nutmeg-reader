@@ -12,14 +12,16 @@ public abstract class NutmegPlot {
   private int noOfWaves;
   private int noOfPoints;
   private String plotname;
+  private String refWave;
   private Map<String, String> units;
 
   protected NutmegPlot(String plotname, int noOfVariables, int noOfPoints,
-      Map<String, String> units) {
+      String refWave, Map<String, String> units) {
 
     this.units = units;
     this.plotname = plotname;
     this.noOfWaves = noOfVariables;
+    this.refWave = refWave;
     this.noOfPoints = noOfPoints;
 
   }
@@ -59,6 +61,15 @@ public abstract class NutmegPlot {
    */
   public String getPlotname() {
     return plotname;
+  }
+
+  /**
+   * Getter for the reference waveform
+   * 
+   * @return refWave
+   */
+  public String getRefWave() {
+    return refWave;
   }
 
   /**

@@ -106,7 +106,7 @@ public class NutasciiReader extends NutReader {
 
         noOfVariables = getNumberOfVariables();
         noOfPoints = getNumberOfPoints();
-        
+
         if (noOfPoints == 0) {
           noOfPoints = 1;
         }
@@ -132,7 +132,7 @@ public class NutasciiReader extends NutReader {
             }
 
             nutmegRealPlot = NutmegRealPlot.make(plotname, noOfVariables,
-                noOfPoints, units, realWaves);
+                noOfPoints, variables[0][0], units, realWaves);
 
             if (nutmegRealPlot != null) {
               this.plots.addLast(nutmegRealPlot);
@@ -156,7 +156,7 @@ public class NutasciiReader extends NutReader {
             }
 
             nutmegComplexPlot = NutmegComplexPlot.make(plotname, noOfVariables,
-                noOfPoints, units, complexWaves);
+                noOfPoints, variables[0][0], units, complexWaves);
 
             if (nutmegComplexPlot != null) {
               plots.add(nutmegComplexPlot);

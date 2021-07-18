@@ -14,28 +14,30 @@ public class NutmegComplexPlot extends NutmegPlot {
   private Map<String, Complex[]> waves;
 
   private NutmegComplexPlot(String plotname, int noOfVariables, int noOfPoints,
-      Map<String, String> units, Map<String, Complex[]> waves) {
-    super(plotname, noOfVariables, noOfPoints, units);
+      String refWave, Map<String, String> units, Map<String, Complex[]> waves) {
+    super(plotname, noOfVariables, noOfPoints, refWave, units);
     this.waves = waves;
   }
 
   /**
    * The method checks all parameters for consistency. When the parameters are
-   * valid, a {@link edlab.eda.reader.nutmeg.NutmegComplexPlot NutmegComplexPlot} is
-   * returned.
+   * valid, a {@link edlab.eda.reader.nutmeg.NutmegComplexPlot
+   * NutmegComplexPlot} is returned.
    * 
    * @param plotname      - Name of the plot
    * @param noOfVariables - Number of variables
    * @param noOfPoints    - Number of points
+   * @param refWave       - Name of reference waveform
    * @param units         - Units
    * @param waves         - Waves
    * @return nutmegRealPlot - Plot
    */
   public static NutmegComplexPlot make(String plotname, int noOfVariables,
-      int noOfPoints, Map<String, String> units, Map<String, Complex[]> waves) {
+      int noOfPoints, String refWave, Map<String, String> units,
+      Map<String, Complex[]> waves) {
 
     NutmegComplexPlot plot = new NutmegComplexPlot(plotname, noOfVariables,
-        noOfPoints, units, waves);
+        noOfPoints, refWave, units, waves);
 
     if (noOfVariables != units.size()) {
       return null;
