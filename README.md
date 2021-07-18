@@ -194,7 +194,7 @@ title(plots(4).name);
 ## TODO
 
 - [X] Test the reader for waveforms generated with Cadence Spectre
-- [ ] Test the reader for waveforms generated with Ngspice
+- [x] Test the reader for waveforms generated with Ngspice
 - [x] Add Octave Interface
 - [ ] Add Python Interface
 
