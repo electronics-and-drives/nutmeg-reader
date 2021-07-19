@@ -12,14 +12,16 @@ public abstract class NutmegPlot {
   private int noOfWaves;
   private int noOfPoints;
   private String plotname;
+  private String refWave;
   private Map<String, String> units;
 
   protected NutmegPlot(String plotname, int noOfVariables, int noOfPoints,
-      Map<String, String> units) {
+      String refWave, Map<String, String> units) {
 
     this.units = units;
     this.plotname = plotname;
     this.noOfWaves = noOfVariables;
+    this.refWave = refWave;
     this.noOfPoints = noOfPoints;
 
   }
@@ -62,6 +64,15 @@ public abstract class NutmegPlot {
   }
 
   /**
+   * Getter for the reference waveform
+   * 
+   * @return refWave
+   */
+  public String getRefWave() {
+    return refWave;
+  }
+
+  /**
    * Check if the plot contains a wave with a given name.
    * 
    * @param wave - name of the wave
@@ -75,4 +86,18 @@ public abstract class NutmegPlot {
    * @return Set of all names of waves.
    */
   public abstract Set<String> getWaves();
+
+  /**
+   * Returns of the plot contains complex waves
+   * 
+   * @return True if plot contains complex waves
+   */
+  public abstract boolean isComplex();
+
+  /**
+   * Returns of the plot contains real waves
+   * 
+   * @return True if plot contains real waves
+   */
+  public abstract boolean isReal();
 }

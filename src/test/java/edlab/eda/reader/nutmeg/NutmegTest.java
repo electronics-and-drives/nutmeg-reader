@@ -8,14 +8,14 @@ public class NutmegTest {
 
     // Create a new reader
     NutReader reader = NutReader
-        .getNutasciiReader("./src/test/java/resources/rc/nutascii.raw");
+        .getNutasciiReader("./src/test/resources/rc1/spectre/nutascii.raw");
 
     // Read and parse the nutascii
     reader.read().parse();
 
     // Get all plots from the reader
     List<NutmegPlot> plots = reader.getPlots();
-
+    
     // Get nutmeg plot from list
     NutmegPlot nutmegPlot = plots.get(0);
 
@@ -27,7 +27,10 @@ public class NutmegTest {
 
     // Get number of variables from plot
     nutmegPlot.getNoOfWaves();
-
+    
+    // Get reference waveform
+    nutmegPlot.getRefWave();
+    
     // Get set of all waves from plot
     Set<String> waves = nutmegPlot.getWaves();
 

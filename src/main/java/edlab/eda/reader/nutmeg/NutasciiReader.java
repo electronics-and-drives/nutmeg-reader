@@ -107,6 +107,10 @@ public class NutasciiReader extends NutReader {
         noOfVariables = getNumberOfVariables();
         noOfPoints = getNumberOfPoints();
 
+        if (noOfPoints == 0) {
+          noOfPoints = 1;
+        }
+
         if (noOfVariables > 0 && noOfPoints > 0) {
           variables = getVariables(noOfVariables);
 
@@ -128,7 +132,7 @@ public class NutasciiReader extends NutReader {
             }
 
             nutmegRealPlot = NutmegRealPlot.make(plotname, noOfVariables,
-                noOfPoints, units, realWaves);
+                noOfPoints, variables[0][0], units, realWaves);
 
             if (nutmegRealPlot != null) {
               this.plots.addLast(nutmegRealPlot);
@@ -152,7 +156,7 @@ public class NutasciiReader extends NutReader {
             }
 
             nutmegComplexPlot = NutmegComplexPlot.make(plotname, noOfVariables,
-                noOfPoints, units, complexWaves);
+                noOfPoints, variables[0][0], units, complexWaves);
 
             if (nutmegComplexPlot != null) {
               plots.add(nutmegComplexPlot);
@@ -297,12 +301,15 @@ public class NutasciiReader extends NutReader {
         if (i == 0) {
 
           if (line.startsWith(VARS_ID)) {
-
             line = line.substring(VARS_ID.length(), line.length()).trim();
 
           } else {
             return null;
           }
+        }
+
+        if (line.length() == 0) {
+          line = scanner.nextLine();
         }
 
         refracturedLine = line.trim().split("\\s");

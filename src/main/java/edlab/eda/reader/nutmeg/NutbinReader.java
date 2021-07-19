@@ -233,7 +233,7 @@ public class NutbinReader extends NutReader {
             }
 
             nutmegRealPlot = NutmegRealPlot.make(plotname, realNoOfVars,
-                noOfPoints, units, realWaves);
+                noOfPoints, varNames[0], units, realWaves);
 
             if (nutmegRealPlot != null) {
               plots.add(nutmegRealPlot);
@@ -275,7 +275,7 @@ public class NutbinReader extends NutReader {
             }
 
             nutmegComplexPlot = NutmegComplexPlot.make(plotname, realNoOfVars,
-                noOfPoints, units, complexWaves);
+                noOfPoints, varNames[0], units, complexWaves);
 
             if (nutmegComplexPlot != null) {
               plots.add(nutmegComplexPlot);

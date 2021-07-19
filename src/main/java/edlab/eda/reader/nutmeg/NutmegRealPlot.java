@@ -12,8 +12,8 @@ public class NutmegRealPlot extends NutmegPlot {
   private Map<String, double[]> waves;
 
   private NutmegRealPlot(String plotname, int noOfVariables, int noOfPoints,
-      Map<String, String> units, Map<String, double[]> waves) {
-    super(plotname, noOfVariables, noOfPoints, units);
+      String refWave, Map<String, String> units, Map<String, double[]> waves) {
+    super(plotname, noOfVariables, noOfPoints, refWave, units);
     this.waves = waves;
   }
 
@@ -25,15 +25,17 @@ public class NutmegRealPlot extends NutmegPlot {
    * @param plotname      - Name of the plot
    * @param noOfVariables - Number of variables
    * @param noOfPoints    - Number of points
+   * @param refWave       - Name of reference waveform
    * @param units         - Units
    * @param waves         - Waves
    * @return nutmegRealPlot - Plot
    */
   public static NutmegRealPlot make(String plotname, int noOfVariables,
-      int noOfPoints, Map<String, String> units, Map<String, double[]> waves) {
+      int noOfPoints, String refWave, Map<String, String> units,
+      Map<String, double[]> waves) {
 
     NutmegRealPlot plot = new NutmegRealPlot(plotname, noOfVariables,
-        noOfPoints, units, waves);
+        noOfPoints, refWave, units, waves);
 
     if (noOfVariables != units.size()) {
       System.out.println(noOfVariables + "-" + units.size());
@@ -90,5 +92,15 @@ public class NutmegRealPlot extends NutmegPlot {
    */
   public double[] getWave(String wave) {
     return this.waves.get(wave);
+  }
+
+  @Override
+  public boolean isComplex() {
+    return false;
+  }
+
+  @Override
+  public boolean isReal() {
+    return true;
   }
 }
