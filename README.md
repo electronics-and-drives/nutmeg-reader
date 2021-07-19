@@ -90,6 +90,24 @@ Additional information can be found in the MATLAB and Octave Manuals
   * [How to make Java classes available to Octave?](https://octave.org/doc/v4.0.1/How-to-make-Java-classes-available_003f.html) 
   * [Manipulating the Load Path](https://octave.org/doc/v4.0.1/Manipulating-the-Load-Path.html) 
 
+### Python
+
+After installing the Java package navigate to the python module
+`./src/main/python/` and install it with `pip`.
+
+```
+$ pip install . --use-feature=in-tree-build 
+```
+
+When creating a `NutmegReader` object a custom `class_path` can be specified,
+otherwise the default maven home `$HOME/.m2/repository` or the variable
+`MAVEN_HOME` will be used.
+
+```python
+nutreader = NutmegReader()
+nutreader = NutmegReader(class_path="some/other/path/to/nutmeg.jar")
+```
+
 ## API
 
 ### Java
