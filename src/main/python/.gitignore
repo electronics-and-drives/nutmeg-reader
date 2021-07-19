@@ -18,3 +18,5 @@ wheels/
 nutmeg_reader/__pycache__/
 nutmeg_reader/*.py[cod]
 nutmeg_reader/*$py.class
+
+tests/__pycache__/
