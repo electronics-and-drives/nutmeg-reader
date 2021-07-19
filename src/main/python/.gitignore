@@ -1,4 +1,3 @@
-
 .installed.cfg
 *.py[cod]
 *$py.class
@@ -16,6 +15,6 @@ eggs/
 share/python-wheels/
 wheels/
 
-nutmeg-reader/__pycache__/
-nutmeg-reader/*.py[cod]
-nutmeg-reader/*$py.class
+nutmeg_reader/__pycache__/
+nutmeg_reader/*.py[cod]
+nutmeg_reader/*$py.class
