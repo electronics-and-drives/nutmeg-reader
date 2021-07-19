@@ -93,4 +93,14 @@ public class NutmegRealPlot extends NutmegPlot {
   public double[] getWave(String wave) {
     return this.waves.get(wave);
   }
+
+  @Override
+  public boolean isComplex() {
+    return false;
+  }
+
+  @Override
+  public boolean isReal() {
+    return true;
+  }
 }

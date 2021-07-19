@@ -94,4 +94,14 @@ public class NutmegComplexPlot extends NutmegPlot {
   public Set<String> getWaves() {
     return this.waves.keySet();
   }
+
+  @Override
+  public boolean isComplex() {
+    return true;
+  }
+
+  @Override
+  public boolean isReal() {
+    return false;
+  }
 }

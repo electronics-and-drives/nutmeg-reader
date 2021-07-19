@@ -86,4 +86,18 @@ public abstract class NutmegPlot {
    * @return Set of all names of waves.
    */
   public abstract Set<String> getWaves();
+
+  /**
+   * Returns of the plot contains complex waves
+   * 
+   * @return True if plot contains complex waves
+   */
+  public abstract boolean isComplex();
+
+  /**
+   * Returns of the plot contains real waves
+   * 
+   * @return True if plot contains real waves
+   */
+  public abstract boolean isReal();
 }
