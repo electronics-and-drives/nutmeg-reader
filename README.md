@@ -108,6 +108,15 @@ help readNutbin
 ```
 to get information how to call the functions in MATLAB / Octave.
 
+### Python
+
+After importing the module, help for the classes can be found via the
+docstrings. For example, to get help on `NutmegReader` see:
+
+```python
+>>> help(NutmegReader)
+```
+
 ## Example
 
 ### Java
@@ -190,6 +199,31 @@ title(plots(4).name);
 ```
 
 ![](fig/plot_octave.png)
+
+### Python
+
+```python
+from nutmeg_reader import NutmegReader
+import pandas as pd
+from matplotlib import pyplot as plt
+
+nutreader = NutmegReader()
+
+file = './src/test/resources/rc2/nutascii.raw'
+plots = nutreader.read_nutascii(file)
+
+tran_plot = plots[3]
+tran_data = pd.DataFrame(tran_plot.wave_data)
+
+fig, axs = plt.subplots(1,1, figsize=(8,8))
+axs.plot(tran_data['time'], tran_data['O'])
+axs.set_title(tran_plot.name)
+axs.set_xlabel(f'time ({tran_plot.wave_units["time"]})')
+axs.set_ylabel(f'O ({tran_plot.wave_units["O"]})')
+plt.show()
+```
+
+![](fig/plot_python.png)
 
 ## TODO
 
