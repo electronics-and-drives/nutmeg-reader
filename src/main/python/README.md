@@ -8,7 +8,7 @@ Since this package is built upon the java nutmeg-reader, it only works after
 the main package is installed.
 
 ```
-$ pip install .
+$ pip install . --use-feature=in-tree-build 
 ```
 
 ## Usage
