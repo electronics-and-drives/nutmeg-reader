@@ -78,6 +78,14 @@ class NutmegReader:
             from edlab.eda.reader.nutmeg import NutReader
             nut_reader = NutReader
 
+    def __del__(self):
+        '''
+        Destructor will shutdown the JVM and set `nut_reader = None`.
+        '''
+        nut_reader = None
+        if jpype.isJVMStarted():
+            jpype.shutdownJVM()
+
     def __read_nutmeg(self, file_name, nut_type):
         '''
         Private reader function for handling ascii and bin types.
