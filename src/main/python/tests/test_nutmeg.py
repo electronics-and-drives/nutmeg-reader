@@ -27,7 +27,7 @@ def test_ascii():
     assert(asc_plots[2].num_of_points == 51)
     assert(asc_plots[3].num_of_points == 56)
 
-    assert(bin_plots[0].num_of_waves == 6)
-    assert(bin_plots[1].num_of_waves == 6)
-    assert(bin_plots[2].num_of_waves == 5)
-    assert(bin_plots[3].num_of_waves == 6)
+    assert(asc_plots[0].num_of_waves == 6)
+    assert(asc_plots[1].num_of_waves == 6)
+    assert(asc_plots[2].num_of_waves == 5)
+    assert(asc_plots[3].num_of_waves == 6)
