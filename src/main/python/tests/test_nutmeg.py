@@ -9,5 +9,3 @@ def test_nutbin():
 def test_ascii():
     asc_plots = nutreader.read_nutascii('../../../test/resources/rc2/nutascii.raw')
     assert(len(bin_plots) == 4)
-
-
