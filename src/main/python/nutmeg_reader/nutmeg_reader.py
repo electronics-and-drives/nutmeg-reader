@@ -1,5 +1,6 @@
 import os
 import errno
+import warnings
 
 import jpype
 import jpype.imports
@@ -10,12 +11,19 @@ import pandas as pd
 
 __version__ = '0.0.1'
 
-if 'MAVEN_HOME' in os.environ:
-    MAVEN_HOME = os.environ['MAVEN_HOME']
-else:
-    MAVEN_HOME = f'{os.environ["HOME"]}/.m2/repository'
+def __get_maven_home():
+    mvn_command  = 'mvn help:evaluate -Dexpression=settings.localRepository -B'
+    maven_output = os.popen(mvn_command).read()
+    maven_home   = list(filter( lambda l: (not l.startswith('[')) and l
+                              , maven_output.split(sep='\n')))[0]
+    return maven_home
 
-CLASS_PATH = f'{MAVEN_HOME}/edlab/eda/reader/nutmeg/{__version__}/nutmeg-{__version__}-jar-with-dependencies.jar'
+def __default_class_path():
+    maven_home = __get_maven_home()
+    class_path = f'{maven_home}/edlab/eda/reader/nutmeg/{__version__}/nutmeg-{__version__}-jar-with-dependencies.jar'
+    return class_path
+
+DEFAULT_CLASS_PATH = __default_class_path()
 
 class NutmegPlot:
     '''
@@ -66,23 +74,46 @@ class NutmegPlot:
                                             for w in self.wave_names ] }
 
 class NutmegReader:
-    nut_reader = None
+    _nut_reader = None
+    _class_path = None
 
-    def __init__(self, class_path=CLASS_PATH):
+    def __init__(self, class_path=DEFAULT_CLASS_PATH):
         '''
         Constructor of the NutmegReader class. Takes an optional class path and
         starts the jvm.
+        Where `class_path` should point to the nutmeg-reader `.jar`. If the
+        nutmeg-reader was installed following the instructions this should be
+        unecessary.
+        
+        **NOTE:** If a jpype has already a JVM running, the class_path arg will
+        be ignored until all objects are `del`ed and the JVM is killed.
         '''
-        if jpype.isJVMStarted():
-            jpype.startJVM(classpath=[class_path])
+        ## Check if given nutmeg jar exists
+        if not os.path.isfile(class_path):
+            raise FileNotFoundError( errno.ENOENT
+                                   , os.strerror(errno.ENOENT)
+                                   , class_path )
+
+        ## Set class path or warn about running JVM
+        if NutmegReader._class_path is None:
+            NutmegReader._class_path = class_path
+        elif jpype.isJVMStarted() and (NutmegReader._class_path != class_path):
+            w1 = f'JVM is already running with a different class path {NutmegReader._class_path}.\n'
+            w2 = f'Close the current JVM to start with a different class path.\n'
+            warnings.warn( f'\n{w1}\n{w2}\n'
+                         , RuntimeWarning ) 
+
+        ## Start JVM if not running and set static variable
+        if not jpype.isJVMStarted():
+            jpype.startJVM(classpath=[NutmegReader._class_path])
             from edlab.eda.reader.nutmeg import NutReader
-            nut_reader = NutReader
+            NutmegReader._nut_reader = NutReader
 
     def __del__(self):
         '''
-        Destructor will shutdown the JVM and set `nut_reader = None`.
+        Destructor will shutdown the JVM and set `_nut_reader = None`.
         '''
-        nut_reader = None
+        NutmegReader._nut_reader = None
         if jpype.isJVMStarted():
             jpype.shutdownJVM()
 
@@ -93,9 +124,9 @@ class NutmegReader:
         '''
         if os.path.isfile(file_name):   # Check if file exists
             if nut_type == 'ascii':
-                reader = nut_reader.getNutasciiReader(file_name)
+                reader = NutmegReader._nut_reader.getNutasciiReader(file_name)
             else:                       # Raise error of file doesn't exist
-                reader = nut_reader.getNutbinReader(file_name)
+                reader = NutmegReader._nut_reader.getNutbinReader(file_name)
 
             # Read and parse the file
             reader.read()
