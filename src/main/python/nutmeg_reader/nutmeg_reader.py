@@ -30,7 +30,7 @@ class NutmegPlot:
     Every plot has properties:
         name = plot1.name                   references the name of the plot
         numOfWaves = plot1.num_of_waves     references the number of waves
-        numOfPoints = plot1.num_of_point    references the number of points
+        numOfPoints = plot1.num_of_points    references the number of points
 
     The name of a waveform can be accessed with:
         name_1 = plot1.wave_names[0]    retrives the name of the first waveform
@@ -56,11 +56,11 @@ class NutmegPlot:
         Constructor for the NutmegPlot class. Takes a NutmegReader Plot object
         and converts it to something useful in python.
         '''
-        self.plot         = plot
-        self.is_complex   = plot.isComplex()
-        self.name         = plot.getPlotname()
-        self.num_of_waves = plot.getNoOfWaves()
-        self.num_of_point = plot.getNoOfPoints()
+        self.plot          = plot
+        self.is_complex    = plot.isComplex()
+        self.name          = plot.getPlotname()
+        self.num_of_waves  = plot.getNoOfWaves()
+        self.num_of_points = plot.getNoOfPoints()
 
         self.wave_names = [ str(wav.toString())
                             for wav in plot.getWaves().toArray() ]
