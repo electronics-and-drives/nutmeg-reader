@@ -66,14 +66,17 @@ class NutmegPlot:
                                             for w in self.wave_names ] }
 
 class NutmegReader:
+    nut_reader = None
+
     def __init__(self, class_path=CLASS_PATH):
         '''
         Constructor of the NutmegReader class. Takes an optional class path and
         starts the jvm.
         '''
-        jpype.startJVM(classpath=[class_path])
-        from edlab.eda.reader.nutmeg import NutReader
-        self.nut_reader = NutReader
+        if jpype.isJVMStarted():
+            jpype.startJVM(classpath=[class_path])
+            from edlab.eda.reader.nutmeg import NutReader
+            nut_reader = NutReader
 
     def __read_nutmeg(self, file_name, nut_type):
         '''
@@ -82,9 +85,9 @@ class NutmegReader:
         '''
         if os.path.isfile(file_name):   # Check if file exists
             if nut_type == 'ascii':
-                reader = self.nut_reader.getNutasciiReader(file_name)
+                reader = nut_reader.getNutasciiReader(file_name)
             else:                       # Raise error of file doesn't exist
-                reader = self.nut_reader.getNutbinReader(file_name)
+                reader = nut_reader.getNutbinReader(file_name)
 
             # Read and parse the file
             reader.read()
