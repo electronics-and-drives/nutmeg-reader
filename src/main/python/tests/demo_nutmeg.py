@@ -5,6 +5,7 @@ from matplotlib import pyplot as plt
 ## Here we create the demo plot for the Documentation.
 
 nutreader = NutmegReader()
+
 bin_plots = nutreader.read_nutbin('../../../test/resources/rc2/nutbin.raw')
 
 tran_plot = bin_plots[3]
