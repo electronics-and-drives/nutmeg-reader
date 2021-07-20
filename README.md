@@ -248,7 +248,7 @@ plt.show()
 - [X] Test the reader for waveforms generated with Cadence Spectre
 - [x] Test the reader for waveforms generated with Ngspice
 - [x] Add Octave Interface
-- [ ] Add Python Interface (WIP)
+- [X] Add Python Interface
 
 ## License
 
