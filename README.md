@@ -243,13 +243,6 @@ plt.show()
 
 ![](fig/plot_python.png)
 
-## TODO
-
-- [X] Test the reader for waveforms generated with Cadence Spectre
-- [x] Test the reader for waveforms generated with Ngspice
-- [x] Add Octave Interface
-- [X] Add Python Interface
-
 ## License
 
 Copyright (C) 2021, [Electronics & Drives](https://www.electronics-and-drives.de/)
