@@ -90,6 +90,24 @@ Additional information can be found in the MATLAB and Octave Manuals
   * [How to make Java classes available to Octave?](https://octave.org/doc/v4.0.1/How-to-make-Java-classes-available_003f.html) 
   * [Manipulating the Load Path](https://octave.org/doc/v4.0.1/Manipulating-the-Load-Path.html) 
 
+### Python
+
+After installing the Java package navigate to the python module
+`./src/main/python/` and install it with `pip`.
+
+```
+$ pip install . --use-feature=in-tree-build 
+```
+
+When creating a `NutmegReader` object a custom `class_path` can be specified,
+otherwise the default maven home `$HOME/.m2/repository` or the variable
+`MAVEN_HOME` will be used.
+
+```python
+nutreader = NutmegReader()
+nutreader = NutmegReader(class_path="some/other/path/to/nutmeg.jar")
+```
+
 ## API
 
 ### Java
@@ -107,6 +125,15 @@ and
 help readNutbin
 ```
 to get information how to call the functions in MATLAB / Octave.
+
+### Python
+
+After importing the module, help for the classes can be found via the
+docstrings. For example, to get help on `NutmegReader` see:
+
+```python
+>>> help(NutmegReader)
+```
 
 ## Example
 
@@ -191,12 +218,37 @@ title(plots(4).name);
 
 ![](fig/plot_octave.png)
 
+### Python
+
+```python
+from nutmeg_reader import NutmegReader
+import pandas as pd
+from matplotlib import pyplot as plt
+
+nutreader = NutmegReader()
+
+file = './src/test/resources/rc2/nutascii.raw'
+plots = nutreader.read_nutascii(file)
+
+tran_plot = plots[3]
+tran_data = pd.DataFrame(tran_plot.wave_data)
+
+fig, axs = plt.subplots(1,1, figsize=(8,8))
+axs.plot(tran_data['time'], tran_data['O'])
+axs.set_title(tran_plot.name)
+axs.set_xlabel(f'time ({tran_plot.wave_units["time"]})')
+axs.set_ylabel(f'O ({tran_plot.wave_units["O"]})')
+plt.show()
+```
+
+![](fig/plot_python.png)
+
 ## TODO
 
 - [X] Test the reader for waveforms generated with Cadence Spectre
 - [x] Test the reader for waveforms generated with Ngspice
 - [x] Add Octave Interface
-- [ ] Add Python Interface
+- [X] Add Python Interface
 
 ## License
 
