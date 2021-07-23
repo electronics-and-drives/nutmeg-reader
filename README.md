@@ -11,7 +11,21 @@ Clone this repository:
 $ git clone https://github.com/electronics-and-drives/nutmeg-reader.git
 ```
 
-`cd nutmeg-reader` into the directory and install the maven package:
+`cd nutmeg-reader` into the directory.
+
+### Makefile
+
+Simple installation with make:
+
+```bash
+$ make java     # for java with maven
+$ make python   # for python with pip (will automatically install java)
+$ make all      # all of the above
+```
+
+### Java Specific
+
+If you're only interested in java you can install it just with maven:
 
 ```bash
 $ mvn install
@@ -42,6 +56,16 @@ You can retrieve the path to the JAR using the command
   cat pom.xml | grep -oPm1 "(?<=<descriptorRef>)[^<]+";
   echo ".jar"
 } | tr -d '\n' 
+```
+
+### Python
+
+The python package depends on the java installation. After installing the java
+package, you can install the python package with pip:
+
+```bash
+$ cd ./src/main/python
+$ pip install . --use-feature=in-tree-build
 ```
 
 ## Setup
