@@ -34,10 +34,22 @@ $ mvn install
 The repository will be installed to the directory
 
 ```bash
-mvn help:evaluate -Dexpression=settings.localRepository | grep -v "^\[" 
+$ make mvn-path
 ```
 
-You can retrieve the path to the JAR using the command
+```bash
+$ mvn -q -Dexec.executable=echo \
+         -Dexec.args='${settings.localRepository}' \
+         --non-recursive exec:exec 2>/dev/null
+```
+
+You can retrieve the path to the JAR with the makefile
+
+```bash
+$ make jar-path
+```
+
+or by using the command
 
 ```bash
 {
