@@ -1,4 +1,4 @@
-# nutmeg-parser
+# nutmeg-reader
 
 Reader for the Nutmeg Waveform Format in Java.
 Parsers for both ASCII and Binary waveforms are provided.
