@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edlab.eda.reader</groupId>
 	<artifactId>nutmeg</artifactId>
-	<version>0.0.1</version>
+	<version>1.0.0</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>8</maven.compiler.source>
@@ -112,7 +112,7 @@
 		<developer>
 			<id>schweikardt</id>
 			<name>Matthias Schweikardt</name>
-			<email>matthias.schweikardt@reutlingen-university.de</email>
+			<email>matthias.schweikardt at reutlingen-university.de</email>
 			<organization>Electronics &amp; Drives</organization>
 			<organizationUrl>https://www.electronics-and-drives.de/</organizationUrl>
 		</developer>

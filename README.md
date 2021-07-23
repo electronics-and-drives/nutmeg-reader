@@ -53,7 +53,7 @@ Add the dependency to your project
 <dependency>
   <groupId>edlab.eda.reader</groupId>
   <artifactId>nutmeg</artifactId>
-  <version>0.0.1</version>
+  <version>1.0.0</version>
 </dependency>
 ```
 
