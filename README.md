@@ -37,6 +37,8 @@ The repository will be installed to the directory
 $ make mvn-path
 ```
 
+or
+
 ```bash
 $ mvn -q -Dexec.executable=echo \
          -Dexec.args='${settings.localRepository}' \
