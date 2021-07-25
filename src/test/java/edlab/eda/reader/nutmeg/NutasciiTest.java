@@ -2,7 +2,6 @@ package edlab.eda.reader.nutmeg;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
