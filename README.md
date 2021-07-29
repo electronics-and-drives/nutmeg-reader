@@ -89,9 +89,9 @@ Add the dependency to your project
 
 ```xml
 <dependency>
-  <groupId>edlab.eda.reader</groupId>
-  <artifactId>nutmeg</artifactId>
-  <version>1.0.0</version>
+  <groupId>edlab.eda</groupId>
+  <artifactId>reader.nutmeg</artifactId>
+  <version>1.0.1</version>
 </dependency>
 ```
 

@@ -17,7 +17,7 @@ public abstract class NutReader {
   private File file;
 
   /**
-   * Flag that indicated whether a waveform is real or complex.
+   * Flag that indicates whether a waveform is real or complex.
    *
    */
   protected static enum FLAG {
@@ -30,7 +30,7 @@ public abstract class NutReader {
      */
     COMPLEX,
     /**
-     * Unified waveform.
+     * Undefined waveform.
      */
     NONE
   };

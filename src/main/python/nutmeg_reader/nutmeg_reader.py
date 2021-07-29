@@ -9,7 +9,7 @@ from jpype.types import *
 import numpy as np
 import pandas as pd
 
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 
 def __get_maven_home():
     mvn_command  = 'mvn help:evaluate -Dexpression=settings.localRepository -B'
