@@ -22,11 +22,11 @@ def _analysis_type(plot_name: str) -> str:
 def _file_names( file_name: str , plots: list[str]
                , extension: str ) -> list[str]:
     fb = f'{os.path.splitext(os.path.abspath(file_name))[0]}'
-    return [ f'{fb}_{_analysis_type(p)}.{extension}' for p in plots ]
+    return [ f'{fb}_{p}.{extension}' for p in plots ]
 
 def _data_frame(plot: Union[NutmegRealPlot, NutmegComplexPlot]) -> pd.DataFrame:
     c = lambda p: complex(p.getReal(), p.getImaginary())
-    d = { w: plot.getWave(w) if not plot.complex else [c(p) for p in wave]
+    d = { w: plot.getWave(w) if not plot.complex else [c(p) for p in plot.getWave(w)]
           for w in plot.getWaves().toArray() }
     return pd.DataFrame(d)
 
