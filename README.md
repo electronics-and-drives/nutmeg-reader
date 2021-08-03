@@ -138,7 +138,7 @@ If the jar is in some other location, make sure `CLASSPATH` points to it before
 importing the python module.
 
 ```
-from nutmeg_reader import NutmegReader, read_nutmeg
+from nutmeg_reader import NutReader, read_nutmeg
 ```
 
 ## API
