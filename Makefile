@@ -21,6 +21,14 @@ python: java
 java:
 	mvn install
 
+test: test-java test-python
+
+test-java:
+	mvn test
+
+test-python:
+	cd ./src/main/python && pytest
+
 mvn-path:
 	$(eval $(call mvnpath, mvn_path))
 	@echo ${mvn_path}
