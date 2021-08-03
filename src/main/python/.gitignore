@@ -2,11 +2,14 @@
 *.py[cod]
 *$py.class
 *.so
+*.log
 *.egg-info
 *.egg-info/
 *.egg
+
 .eggs/
 .Python
+.pytest_cache/
 __pycache__/
 build/
 develop-eggs/
