@@ -1,14 +1,14 @@
 # Small installer for Java and/or Python
 
 define mvnpath
-	$(1) := $(shell mvn -q -Dexec.executable=echo -Dexec.args="\$${settings.localRepository}" --non-recursive exec:exec)
+	$(1) := $(shell mvn -q -Dexec.executable=echo -Dexec.args="\$${settings.localRepository}" --non-recursive exec:exec 2> /dev/null)
 endef
 
 define jarpath
 	$(eval $(call mvnpath, mvn_path))
-	groupId=$(shell mvn -q -Dexec.executable=echo -Dexec.args="\$${project.groupId}" --non-recursive exec:exec | tr '.' '/')
-	artifactId=$(shell mvn -q -Dexec.executable=echo -Dexec.args="\$${project.artifactId}" --non-recursive exec:exec)
-	version=$(shell mvn -q -Dexec.executable=echo -Dexec.args="\$${project.version}" --non-recursive exec:exec)
+	groupId=$(shell mvn -q -Dexec.executable=echo -Dexec.args="\$${project.groupId}" --non-recursive exec:exec 2> /dev/null | tr '.' '/')
+	artifactId=$(shell mvn -q -Dexec.executable=echo -Dexec.args="\$${project.artifactId}" --non-recursive exec:exec 2> /dev/null)
+	version=$(shell mvn -q -Dexec.executable=echo -Dexec.args="\$${project.version}" --non-recursive exec:exec 2> /dev/null)
 	descriptorRef="jar-with-dependencies"
 	$(1) := "$(mvn_path)/$$(groupId)/$$(artifactId)/$$(version)/$$(artifactId)-$$(version)-$$(descriptorRef).jar"
 endef
