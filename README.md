@@ -261,6 +261,8 @@ title(plots(4).name);
 See the [readme](src/main/python/README.md) in the python module for further examples.
 
 ```python
+from nutmeg_reader import NutReader
+
 nut_file    = '../../../test/resources/rc2/nutascii.raw'
 nut_reader  = NutReader.getNutasciiReader(nut_file)
 
