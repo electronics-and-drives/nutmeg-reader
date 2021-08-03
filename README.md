@@ -132,20 +132,13 @@ Additional information can be found in the MATLAB and Octave Manuals
 
 ### Python
 
-After installing the Java package navigate to the python module
-`./src/main/python/` and install it with `pip`.
+The `nutmeg_reader` module depends on the java package and looks for it in the
+default maven install directory given by the command above or `make jar-path`.
+If the jar is in some other location, make sure `CLASSPATH` points to it before
+importing the python module.
 
 ```
-$ pip install . --use-feature=in-tree-build 
-```
-
-When creating a `NutmegReader` object a custom `class_path` can be specified,
-otherwise the default maven home `$HOME/.m2/repository` or the variable
-`MAVEN_HOME` will be used.
-
-```python
-nutreader = NutmegReader()
-nutreader = NutmegReader(class_path="some/other/path/to/nutmeg.jar")
+from nutmeg_reader import NutmegReader, read_nutmeg
 ```
 
 ## API
@@ -169,10 +162,15 @@ to get information how to call the functions in MATLAB / Octave.
 ### Python
 
 After importing the module, help for the classes can be found via the
-docstrings. For example, to get help on `NutmegReader` see:
+docstrings. For example, to get help for the `NutReader` class or the
+`read_nutmeg` function see:
 
 ```python
->>> help(NutmegReader)
+>>> from nutmeg_reader import NutReader, read_nutmeg
+
+>>> help(NutReader)
+
+>>> help(read_nutmeg)
 ```
 
 ## Example
@@ -260,25 +258,27 @@ title(plots(4).name);
 
 ### Python
 
+See the [readme](src/main/python/README.md) in the python module for further examples.
+
 ```python
-from nutmeg_reader import NutmegReader
-import pandas as pd
-from matplotlib import pyplot as plt
+nut_file    = '../../../test/resources/rc2/nutascii.raw'
+nut_reader  = NutReader.getNutasciiReader(nut_file)
 
-nutreader = NutmegReader()
+reader.read().parse();
 
-file = './src/test/resources/rc2/nutascii.raw'
-plots = nutreader.read_nutascii(file)
+plots       = reader.getPlots().toArray()
+tran_plot   = plots[3]
 
-tran_plot = plots[3]
-tran_data = pd.DataFrame(tran_plot.wave_data)
+tran_data   = pd.DataFrame({ w: tran_plot.getWave(w) 
+                             for w in tran_plot.getWaves().toArray() })
 
 fig, axs = plt.subplots(1,1, figsize=(8,8))
 axs.plot(tran_data['time'], tran_data['O'])
-axs.set_title(tran_plot.name)
-axs.set_xlabel(f'time ({tran_plot.wave_units["time"]})')
-axs.set_ylabel(f'O ({tran_plot.wave_units["O"]})')
+axs.set_title(tran_plot.getPlotname())
+axs.set_xlabel(f'time ({tran_plot.getUnit("time")})')
+axs.set_ylabel(f'O ({tran_plot.getUnit("O")})')
 plt.show()
+
 ```
 
 ![](fig/plot_python.png)
