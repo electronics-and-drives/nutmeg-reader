@@ -128,7 +128,7 @@ reader.read().parse();
 plots = reader.getPlots().toArray()
 
 # Get nutmeg plot from list
-plot = plots.get(0)
+plot = plots[0]
 
 # Get the name of a plot
 plot.getPlotname()
