@@ -93,7 +93,7 @@ Add the dependency to your project
 <dependency>
   <groupId>edlab.eda</groupId>
   <artifactId>reader.nutmeg</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
 </dependency>
 ```
 
