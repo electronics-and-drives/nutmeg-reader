@@ -1,6 +1,6 @@
 import setuptools
  
-package_name = 'nutmegreader'
+package_name = 'nutmeg_reader'
 
 with open('README.md', 'r') as fh:
     long_description = fh.read()
@@ -9,7 +9,7 @@ with open('requirements.txt', 'r') as req:
     requirements = req.read().splitlines()
  
 setuptools.setup( name                          = package_name
-                , version                       = '1.0.1'
+                , version                       = '1.0.2'
                 , author                        = 'Yannick Uhlmann, Matthias Schweikardt'
                 , author_email                  = 'yannick.uhlmann@reutlingen-university.de'
                 , description                   = 'Nutmeg reader for python based on Java implementation.'
@@ -22,6 +22,6 @@ setuptools.setup( name                          = package_name
                                                   , 'Operating System :: POSIX :: Linux' ]
                 , python_requires               = '>=3.8'
                 , install_requires              = requirements
-                #, entry_points                  = { 'console_scripts': [ 'FIXME' ]}
-                #, package_data                  = { '': ['*.hy', '__pycache__/*']}
+                , entry_points                  = { 'console_scripts': [ 'nut2hdf = nutmeg_reader.__main__:n2h' 
+                                                                       , 'nut2csv = nutmeg_reader.__main__:n2c' ]}
                 , )

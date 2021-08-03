@@ -1,3 +1,4 @@
-JPype1
-numpy
-matplotlib
+pyjnius
+python-magic
+pandas
+h5py
