@@ -11,7 +11,9 @@ import pandas as pd
 
 from jnius import autoclass
 
-__version__ = '1.0.1'
+NutmegRealPlot      = autoclass('edlab.eda.reader.nutmeg.NutmegRealPlot')
+NutmegComplexPlot   = autoclass('edlab.eda.reader.nutmeg.NutmegComplexPlot')
+NutReader           = autoclass('edlab.eda.reader.nutmeg.NutReader')
 
 def _analysis_type(plot_name: str) -> str:
     analysis_pattern = "`(.*?)'"
@@ -22,15 +24,11 @@ def _file_names( file_name: str , plots: list[str]
     fb = f'{os.path.splitext(os.path.abspath(file_name))[0]}'
     return [ f'{fb}_{_analysis_type(p)}.{extension}' for p in plots ]
 
-def _data_frame(plot: Union[ jnius.reflect.edlab.eda.reader.nutmeg.NutmegPlot
-                           , jnius.reflect.edlab.eda.reader.nutmeg.NutmegComplexPlot ]
-               ) -> pd.DataFrame:
+def _data_frame(plot: Union[NutmegRealPlot, NutmegComplexPlot]) -> pd.DataFrame:
     c = lambda p: complex(p.getReal(), p.getImaginary())
     d = { w: plot.getWave(w) if not plot.complex else [c(p) for p in wave]
           for w in plot.getWaves().toArray() }
     return pd.DataFrame(d)
-
-NutReader = autoclass('edlab.eda.reader.nutmeg.NutReader')
 
 def read_nutmeg(file_name: str) -> dict[str, pd.DataFrame]:
     '''
