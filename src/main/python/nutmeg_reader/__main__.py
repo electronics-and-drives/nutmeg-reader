@@ -34,14 +34,14 @@ def __convert_nutmeg(file_type: str) -> int:
 
     return 0
 
-def nut2hdf() -> int:
+def n2h() -> int:
     '''
     nut2hdf: Entry point for converting Nutmeg to HDF5.
         Returns exit code.
     '''
     return __convert_nutmeg('HDF')
 
-def nut2csv() -> int:
+def n2c() -> int:
     '''
     nut2csv: Entry point for converting Nutmeg to CSV.
         Returns exit code.
