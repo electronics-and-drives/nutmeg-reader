@@ -1,5 +1,4 @@
 pyjnius
 python-magic
-numpy
 pandas
-matplotlib
+h5py
