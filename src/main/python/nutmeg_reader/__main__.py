@@ -1,7 +1,7 @@
 import os
 import argparse
 from pkg_resources import get_distribution
-from .nutmeg_reader import NutReader, read_nutmeg 
+from .nutmeg_reader import nut2hdf, nut2csv
 
 __name__    = 'nutmeg_reader'
 __version__ = get_distribution(__name__).version
@@ -13,7 +13,7 @@ def __convert_nutmeg(file_type: str) -> int:
                        , version=f'{__name__}: {__version__}'
                        , )
 
-    parser.add_argument( 'file', type=str, nargs=1
+    parser.add_argument( 'files', type=str, nargs='+'
                        , help='Path to Nutmeg input file'
                        , )
 
@@ -23,6 +23,14 @@ def __convert_nutmeg(file_type: str) -> int:
     if file_type == 'HDF':
         parser.add_argument( '-s', '--single', action='store_true'
                            , help='Put all plots into a single HDF file')
+
+    args = parser.parse_args()
+
+    for file_name in args.files:
+        if file_type == 'HDF':
+            nut2hdf(file_name, args.single, args.override)
+        elif file_type == 'CSV':
+            nut2csv(file_name, args.override)
 
     return 0
 
