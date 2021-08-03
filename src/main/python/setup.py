@@ -22,6 +22,6 @@ setuptools.setup( name                          = package_name
                                                   , 'Operating System :: POSIX :: Linux' ]
                 , python_requires               = '>=3.8'
                 , install_requires              = requirements
-                , entry_points                  = { 'console_scripts': [ 'nut2hdf = nutmeg_reader.__main__:pct' 
-                                                                       , 'nut2csv = nutmeg_reader.__main__:prc' ]}
+                , entry_points                  = { 'console_scripts': [ 'nut2hdf = nutmeg_reader.__main__:nut2hdf' 
+                                                                       , 'nut2csv = nutmeg_reader.__main__:nut2csv' ]}
                 , )
