@@ -4,7 +4,7 @@ def test_nutbin():
     bin_file    = '../../test/resources/rc2/nutbin.raw'
     bin_reader  = NutReader.getNutbinReader(bin_file)
     bin_reader.read().parse();
-    bin_plots   = bin_reader.getPlots().toArray()
+    bin_plots   = list(bin_reader.getPlots())
 
     assert(len(bin_plots) == 4)
 
@@ -22,7 +22,7 @@ def test_ascii():
     asc_file    = '../../test/resources/rc2/nutascii.raw'
     asc_reader  = NutReader.getNutasciiReader(asc_file)
     asc_reader.read().parse();
-    asc_plots   = asc_reader.getPlots().toArray()
+    asc_plots   = list(asc_reader.getPlots())
 
     assert(len(asc_plots) == 4)
 
