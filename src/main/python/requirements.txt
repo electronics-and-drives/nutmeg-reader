@@ -1,4 +1,4 @@
-pyjnius
+jpype1
 python-magic
 pandas
 h5py

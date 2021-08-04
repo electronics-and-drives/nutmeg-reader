@@ -61,8 +61,8 @@ def _file_names( file_name: str , plots: list[str]
 
 def _data_frame(plot: Union[NutmegRealPlot, NutmegComplexPlot]) -> pd.DataFrame:
     c = lambda p: complex(p.getReal(), p.getImaginary())
-    d = { w: plot.getWave(w) if not plot.complex else [c(p) for p in plot.getWave(w)]
-          for w in plot.getWaves().toArray() }
+    d = { w: plot.getWave(w) if not plot.isComplex() else [c(p) for p in plot.getWave(w)]
+          for w in list(plot.getWaves()) }
     return pd.DataFrame(d)
 
 def read_nutmeg(file_name: str) -> dict[str, pd.DataFrame]:
@@ -95,8 +95,8 @@ def read_nutmeg(file_name: str) -> dict[str, pd.DataFrame]:
              
     reader.read().parse()
 
-    return { _analysis_type(plot.getPlotname()): _data_frame(plot)
-             for plot in reader.getPlots().toArray() }
+    return { _analysis_type(str(plot.getPlotname())): _data_frame(plot)
+             for plot in reader.getPlots() }
 
 def nut2hdf( file_name: str, single: bool = False
            , override: bool = False ) -> Union[str, list[str]]:
