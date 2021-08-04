@@ -125,7 +125,7 @@ reader = NutReader.getNutasciiReader('../../test/resources/rc2/nutascii.raw')
 reader.read().parse();
 
 # Get all plots from the reader
-plots = reader.getPlots().toArray()
+plots = reader.getPlots()
 
 # Get nutmeg plot from list
 plot = plots[0]
@@ -140,7 +140,7 @@ plot.getNoOfPoints()
 plot.getNoOfVariables()
 
 # Get set of all waves from plot
-waves = plot.getWaves().toArray()
+waves = list(plot.getWaves())
 
 # Check if wave with name 'I' is part of plot
 plot.containsWave('I')
@@ -152,7 +152,7 @@ plot.getUnit('I')
 if plot.isComplex():
     wave = [complex(p.getReal(), p.getImaginary()) for p in plot.getWave('I')]
 else:
-    wave = plot.getWave('I')
+    wave = list(plot.getWave('I'))
 ```
 
 #### The simple way
