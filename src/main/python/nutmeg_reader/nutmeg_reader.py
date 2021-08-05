@@ -3,6 +3,8 @@ import re
 import errno
 import magic
 import shutil
+import random
+import string
 import warnings
 import importlib
 
@@ -83,8 +85,10 @@ def _analysis_type(plot_name: str) -> str:
     '''
     analysis_pattern = "`(.*?)'"
     analysis_match   = re.search(analysis_pattern, plot_name)
+    analysis_type    = analysis_match.group(1) if analysis_match is not None \
+                  else 'dummy_' + ''.join(random.sample( string.ascii_letters, 5))
 
-    return analysis_match.group(1) if analysis_match is not None else "NoName"
+    return analysis_type
 
 def _file_names( file_name: str , plots: list[str]
                , extension: str ) -> list[str]:
