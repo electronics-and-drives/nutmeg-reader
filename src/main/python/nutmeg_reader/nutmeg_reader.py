@@ -104,8 +104,8 @@ def _data_frame(plot: Union[NutmegRealPlot, NutmegComplexPlot]) -> pd.DataFrame:
     pandas Data Frame.
     '''
     c = lambda p: complex(p.getReal(), p.getImaginary())
-    d = { w: plot.getWave(w) if not plot.isComplex() \
-                             else [c(p) for p in plot.getWave(w)]
+    d = { str(w): plot.getWave(w) if not plot.isComplex() \
+                                  else [c(p) for p in plot.getWave(w)]
           for w in list(plot.getWaves()) }
     return pd.DataFrame(d)
 
