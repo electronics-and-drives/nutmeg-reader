@@ -82,7 +82,9 @@ def _analysis_type(plot_name: str) -> str:
     Extract the analys type from a given plot name.
     '''
     analysis_pattern = "`(.*?)'"
-    return re.search(analysis_pattern, plot_name).group(1)
+    analysis_match   = re.search(analysis_pattern, plot_name)
+
+    return analysis_match.group(1) if analysis_match is not None else "NoName"
 
 def _file_names( file_name: str , plots: list[str]
                , extension: str ) -> list[str]:
