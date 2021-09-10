@@ -2,33 +2,114 @@ import os
 import re
 import errno
 import magic
+import shutil
+import random
+import string
 import warnings
+import importlib
 
 from typing import Union
+from pkg_resources import get_distribution
 
 import h5py as h5
 import pandas as pd
 
-from jnius import autoclass
+import jpype
+import jpype.imports
+from jpype.types import *
 
-NutmegRealPlot      = autoclass('edlab.eda.reader.nutmeg.NutmegRealPlot')
-NutmegComplexPlot   = autoclass('edlab.eda.reader.nutmeg.NutmegComplexPlot')
-NutReader           = autoclass('edlab.eda.reader.nutmeg.NutReader')
+## Package Meta information ###################################################
+
+__name__    = 'nutmeg_reader'
+__version__ = get_distribution(__name__).version
+
+## Module internal functions ##################################################
+
+def __get_maven_home() -> Union[str, None]:
+    '''
+    Get the default maven home directory.
+    '''
+    maven_home = None
+
+    mvn_command  = 'mvn help:evaluate ' \
+                 + '-Dexpression=settings.localRepository ' \
+                 + '-B 2> /dev/null'
+
+    if shutil.which('mvn') is not None:
+        maven_output = os.popen(mvn_command).read()
+        maven_home   = list(filter( lambda l: (not l.startswith('[')) and l
+                                  , maven_output.split(sep='\n')))[0]
+    else:
+        raise ChildProcessError( errno.ECHILD
+                               , os.strerror(errno.ECHILD)
+                               , 'sh: command not found: mvn' )
+
+    return maven_home
+
+def __default_class_path() -> Union[str, None]:
+    '''
+    Get the expected class path for the `nutmeg-reader` jar, including all
+    dependencies.
+    '''
+    maven_home = __get_maven_home()
+    path = f'{maven_home}/edlab/eda/reader.nutmeg/{__version__}/'
+    clss = f'reader.nutmeg-{__version__}-jar-with-dependencies.jar'
+    class_path = path + clss
+
+    if not (os.path.isfile(class_path) and os.access(class_path, os.R_OK)):
+        raise FileNotFoundError( errno.ENOENT
+                               , os.strerror(errno.ENOENT)
+                               , class_path )
+        class_path = None
+
+    return class_path
+
+## Starting and Handling the JVM ##############################################
+
+if not jpype.isJVMStarted():
+    jpype.startJVM()
+
+if importlib.util.find_spec('edlab') is None:
+    jpype.addClassPath(__default_class_path())
+
+## Import Java Classes ########################################################
+
+global NutReader, NutmegRealPlot, NutmegComplexPlot
+from edlab.eda.reader.nutmeg import NutReader, NutmegRealPlot, NutmegComplexPlot
+
+## Module private functions ###################################################
 
 def _analysis_type(plot_name: str) -> str:
+    '''
+    Extract the analys type from a given plot name.
+    '''
     analysis_pattern = "`(.*?)'"
-    return re.search(analysis_pattern, plot_name).group(1)
+    analysis_match   = re.search(analysis_pattern, plot_name)
+    analysis_type    = analysis_match.group(1) if analysis_match is not None \
+                  else 'dummy_' + ''.join(random.sample( string.ascii_letters, 5))
+
+    return analysis_type
 
 def _file_names( file_name: str , plots: list[str]
                , extension: str ) -> list[str]:
+    '''
+    Construct individual file names for plots contained in a single Nutmeg file.
+    '''
     fb = f'{os.path.splitext(os.path.abspath(file_name))[0]}'
     return [ f'{fb}_{p}.{extension}' for p in plots ]
 
 def _data_frame(plot: Union[NutmegRealPlot, NutmegComplexPlot]) -> pd.DataFrame:
+    '''
+    Turn a single NutmegRealPlot or NutmegComplexPlot object into a 
+    pandas Data Frame.
+    '''
     c = lambda p: complex(p.getReal(), p.getImaginary())
-    d = { w: plot.getWave(w) if not plot.complex else [c(p) for p in plot.getWave(w)]
-          for w in plot.getWaves().toArray() }
+    d = { str(w): plot.getWave(w) if not plot.isComplex() \
+                                  else [c(p) for p in plot.getWave(w)]
+          for w in list(plot.getWaves()) }
     return pd.DataFrame(d)
+
+## Module functions ###########################################################
 
 def read_nutmeg(file_name: str) -> dict[str, pd.DataFrame]:
     '''
@@ -60,8 +141,8 @@ def read_nutmeg(file_name: str) -> dict[str, pd.DataFrame]:
              
     reader.read().parse()
 
-    return { _analysis_type(plot.getPlotname()): _data_frame(plot)
-             for plot in reader.getPlots().toArray() }
+    return { _analysis_type(str(plot.getPlotname())): _data_frame(plot)
+             for plot in reader.getPlots() }
 
 def nut2hdf( file_name: str, single: bool = False
            , override: bool = False ) -> Union[str, list[str]]:
