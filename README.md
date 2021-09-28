@@ -1,3 +1,4 @@
+
 # nutmeg-reader
 
 [![Maven](https://github.com/electronics-and-drives/nutmeg-reader/actions/workflows/maven.yml/badge.svg)](https://github.com/electronics-and-drives/nutmeg-reader/actions/workflows/maven.yml)
@@ -93,7 +94,7 @@ Add the dependency to your project
 <dependency>
   <groupId>edlab.eda</groupId>
   <artifactId>reader.nutmeg</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
 </dependency>
 ```
 

@@ -4,7 +4,17 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edlab.eda</groupId>
 	<artifactId>reader.nutmeg</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
+
+	<distributionManagement>
+	   <repository>
+	     <id>github</id>
+	     <name>GitHub electronics-and-drives Apache Maven Packages</name>
+	     <url>https://maven.pkg.github.com/electronics-and-drives/nutmeg-reader</url>
+	   </repository>
+	</distributionManagement>
+
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -116,13 +126,4 @@
 		<name>Electronics &amp; Drives</name>
 		<url>https://www.electronics-and-drives.de/</url>
 	</organization>
-	<developers>
-		<developer>
-			<id>schweikardt</id>
-			<name>Matthias Schweikardt</name>
-			<email>matthias.schweikardt at reutlingen-university.de</email>
-			<organization>Electronics &amp; Drives</organization>
-			<organizationUrl>https://www.electronics-and-drives.de/</organizationUrl>
-		</developer>
-	</developers>
 </project>

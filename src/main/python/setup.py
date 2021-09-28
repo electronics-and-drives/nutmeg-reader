@@ -9,7 +9,7 @@ with open('requirements.txt', 'r') as req:
     requirements = req.read().splitlines()
  
 setuptools.setup( name                          = package_name
-                , version                       = '1.0.2'
+                , version                       = '1.0.3'
                 , author                        = 'Yannick Uhlmann, Matthias Schweikardt'
                 , author_email                  = 'yannick.uhlmann@reutlingen-university.de'
                 , description                   = 'Nutmeg reader for python based on Java implementation.'

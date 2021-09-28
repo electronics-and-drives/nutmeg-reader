@@ -49,7 +49,8 @@ public abstract class NutReader {
   /**
    * Create a new {@link edlab.eda.reader.nutmeg.NutReader NutReader}
    * 
-   * @param file Nutmeg waveform file
+   * @param file       Nutmeg waveform file
+   * @param translator Translator for wave names
    */
   protected NutReader(String file, CharSequenceTranslator translator) {
     this.file = new File(file);
