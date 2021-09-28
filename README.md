@@ -1,7 +1,7 @@
 
 # nutmeg-reader
 
-[![Maven](https://github.com/electronics-and-drives/nutmeg-reader/actions/workflows/maven.yml/badge.svg)](https://github.com/electronics-and-drives/nutmeg-reader/actions/workflows/maven.yml)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)  [![Maven](https://github.com/electronics-and-drives/nutmeg-reader/actions/workflows/maven.yml/badge.svg)](https://github.com/electronics-and-drives/nutmeg-reader/actions/workflows/maven.yml)
 
 Reader for the Nutmeg Waveform Format in Java.
 Parsers for both ASCII and Binary waveforms are provided.
