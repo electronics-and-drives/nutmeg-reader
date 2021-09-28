@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import org.apache.commons.text.translate.CharSequenceTranslator;
 import org.apache.commons.math3.complex.Complex;
 
 /**
@@ -37,21 +38,45 @@ public class NutbinReader extends NutReader {
   private static final int STOP = 1;
 
   private NutbinReader(String file) {
-    super(file);
+    super(file, new DefaultTranslator());
   }
 
-  /*
+  private NutbinReader(String file, CharSequenceTranslator translator) {
+    super(file, translator);
+  }
+
+  /**
    * Creates a {@link edlab.eda.reader.nutmeg.NutReader NutReader} of a nutmeg
    * waveform file in binary syntax.
    * 
-   * @param file - path to waveform file
-   * 
-   * @return nutReader - Reader for the corresponding waveform, null when the
-   * file is not existing.
+   * @param file Path to waveform file
+   * @return nutReader Reader for the corresponding waveform, <code>null</code>
+   *         when the file is not existing.
    */
   public static NutReader getNutReader(String file) {
 
     NutReader nutReader = new NutbinReader(file);
+
+    if (nutReader.getFile() == null) {
+      return null;
+    } else {
+      return nutReader;
+    }
+  }
+
+  /**
+   * Creates a {@link edlab.eda.reader.nutmeg.NutReader NutReader} of a nutmeg
+   * waveform file in binary syntax.
+   * 
+   * @param file       Path to waveform file
+   * @param translator Translator for wave names
+   * @return nutReader Reader for the corresponding waveform, <code>null</code>
+   *         when the file is not existing.
+   */
+  public static NutReader getNutReader(String file,
+      CharSequenceTranslator translator) {
+
+    NutReader nutReader = new NutbinReader(file, translator);
 
     if (nutReader.getFile() == null) {
       return null;
@@ -227,7 +252,8 @@ public class NutbinReader extends NutReader {
               if (realWaves.containsKey(varNames[i])) {
                 realNoOfVars--;
               } else {
-                realWaves.put(varNames[i], realWave);
+
+                realWaves.put(this.translator.translate(varNames[i]), realWave);
                 units.put(varNames[i], varUnit[i]);
               }
             }
@@ -269,7 +295,8 @@ public class NutbinReader extends NutReader {
               if (complexWaves.containsKey(varNames[i])) {
                 realNoOfVars--;
               } else {
-                complexWaves.put(varNames[i], complexWave);
+                complexWaves.put(this.translator.translate(varNames[i]),
+                    complexWave);
                 units.put(varNames[i], varUnit[i]);
               }
             }

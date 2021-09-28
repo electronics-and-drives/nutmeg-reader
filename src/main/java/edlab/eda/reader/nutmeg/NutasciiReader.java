@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 import org.apache.commons.math3.complex.Complex;
+import org.apache.commons.text.translate.CharSequenceTranslator;
 
 /**
  * Reader for a Nutmeg waveform file in ASCII syntax.
@@ -31,20 +32,45 @@ public class NutasciiReader extends NutReader {
   private boolean scannerOpen = false;
 
   private NutasciiReader(String file) {
-    super(file);
+    super(file, new DefaultTranslator());
+  }
+
+  private NutasciiReader(String file, CharSequenceTranslator translator) {
+    super(file, translator);
   }
 
   /**
    * Creates a {@link edlab.eda.reader.nutmeg.NutReader NutReader} of a nutmeg
    * waveform file in binary syntax.
    * 
-   * @param file - path to waveform file
-   * @return nutReader - Reader for the corresponding waveform, null when the
-   *         file is not existing.
+   * @param file Path to waveform file
+   * @return nutReader Reader for the corresponding waveform, <code>null</code>
+   *         when the file is not existing.
    */
   public static NutReader getNutReader(String file) {
 
     NutReader nutReader = new NutasciiReader(file);
+
+    if (nutReader.getFile() == null) {
+      return null;
+    } else {
+      return nutReader;
+    }
+  }
+
+  /**
+   * Creates a {@link edlab.eda.reader.nutmeg.NutReader NutReader} of a nutmeg
+   * waveform file in binary syntax.
+   * 
+   * @param file       Path to waveform file
+   * @param translator Translator for wave names
+   * @return nutReader Reader for the corresponding waveform, <code>null</code>
+   *         when the file is not existing.
+   */
+  public static NutReader getNutReader(String file,
+      CharSequenceTranslator translator) {
+
+    NutReader nutReader = new NutasciiReader(file, translator);
 
     if (nutReader.getFile() == null) {
       return null;
@@ -126,8 +152,10 @@ public class NutasciiReader extends NutReader {
               if (realWaves.containsKey(variables[i][0])) {
                 noOfVariables--;
               } else {
+
                 units.put(variables[i][0], variables[i][1]);
-                realWaves.put(variables[i][0], realVals[i]);
+                realWaves.put(this.translator.translate(variables[i][0]),
+                    realVals[i]);
               }
             }
 
@@ -151,7 +179,8 @@ public class NutasciiReader extends NutReader {
                 noOfVariables--;
               } else {
                 units.put(variables[i][0], variables[i][1]);
-                complexWaves.put(variables[i][0], complexVals[i]);
+                complexWaves.put(this.translator.translate(variables[i][0]),
+                    complexVals[i]);
               }
             }
 

@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.text.translate.CharSequenceTranslator;
+
 /**
  * Reader for a Nutmeg waveform file.
  *
@@ -14,7 +16,13 @@ public abstract class NutReader {
    * List of plots
    */
   protected LinkedList<NutmegPlot> plots;
+
   private File file;
+
+  /**
+   * Translator for wave names
+   */
+  protected CharSequenceTranslator translator;
 
   /**
    * Flag that indicates whether a waveform is real or complex.
@@ -41,9 +49,9 @@ public abstract class NutReader {
   /**
    * Create a new {@link edlab.eda.reader.nutmeg.NutReader NutReader}
    * 
-   * @param file - nutmeg waveform file
+   * @param file Nutmeg waveform file
    */
-  protected NutReader(String file) {
+  protected NutReader(String file, CharSequenceTranslator translator) {
     this.file = new File(file);
 
     if (this.file.exists()) {
@@ -59,6 +67,8 @@ public abstract class NutReader {
       System.err.println("File " + file + " does not exist");
       this.file = null;
     }
+
+    this.translator = translator;
   }
 
   /**
@@ -83,9 +93,9 @@ public abstract class NutReader {
    * Creates a {@link edlab.eda.reader.nutmeg.NutReader NutReader} of a nutmeg
    * waveform file in ASCII syntax.
    * 
-   * @param file - path to waveform file
-   * @return nutReader - Reader for the corresponding waveform / null when the
-   *         file is not existing
+   * @param file Path to waveform file
+   * @return nutReader Reader for the corresponding waveform <code>null</code>
+   *         when the file is not existing
    */
   public static NutReader getNutasciiReader(String file) {
     return NutasciiReader.getNutReader(file);
@@ -93,14 +103,42 @@ public abstract class NutReader {
 
   /**
    * Creates a {@link edlab.eda.reader.nutmeg.NutReader NutReader} of a nutmeg
+   * waveform file in ASCII syntax.
+   * 
+   * @param file       Path to waveform file
+   * @param translator Translator for wave names
+   * @return nutReader Reader for the corresponding waveform <code>null</code>
+   *         when the file is not existing
+   */
+  public static NutReader getNutasciiReader(String file,
+      CharSequenceTranslator translator) {
+    return NutasciiReader.getNutReader(file, translator);
+  }
+
+  /**
+   * Creates a {@link edlab.eda.reader.nutmeg.NutReader NutReader} of a nutmeg
    * waveform file in binary syntax.
    * 
-   * @param file - path to waveform file
-   * @return nutReader - Reader for the corresponding waveform, null when the
-   *         file is not existing
+   * @param file Path to waveform file
+   * @return nutReader - Reader for the corresponding waveform,
+   *         <code>null</code> when the file is not existing
    */
   public static NutReader getNutbinReader(String file) {
     return NutbinReader.getNutReader(file);
+  }
+
+  /**
+   * Creates a {@link edlab.eda.reader.nutmeg.NutReader NutReader} of a nutmeg
+   * waveform file in binary syntax.
+   * 
+   * @param file       Path to waveform file
+   * @param translator Translator for wave names
+   * @return nutReader - Reader for the corresponding waveform,
+   *         <code>null</code> when the file is not existing
+   */
+  public static NutReader getNutbinReader(String file,
+      CharSequenceTranslator translator) {
+    return NutbinReader.getNutReader(file, translator);
   }
 
   /**
