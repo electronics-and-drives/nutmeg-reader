@@ -16,10 +16,12 @@ class NutmegComparisonTest {
         "./src/test/resources/rc1/spectre/nutbin.raw");
     compareWaves("./src/test/resources/rc2/nutascii.raw",
         "./src/test/resources/rc2/nutbin.raw");
+    
+    compareWaves("./src/test/resources/op/nutascii.raw",
+        "./src/test/resources/op/nutbin.raw");
   }
 
   private static void compareWaves(String nutascii, String nutbin) {
-
     NutmegRealPlot ascciRealPlot;
     NutmegRealPlot binRealPlot;
     NutmegComplexPlot ascciComplexPlot;
