@@ -1,6 +1,6 @@
 package edlab.eda.reader.nutmeg;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
 
@@ -21,20 +21,20 @@ class NutmegComparisonTest {
         "./src/test/resources/op/nutbin.raw");
   }
 
-  private static void compareWaves(String nutascii, String nutbin) {
+  private static void compareWaves(final String nutascii, final String nutbin) {
     NutmegRealPlot ascciRealPlot;
     NutmegRealPlot binRealPlot;
     NutmegComplexPlot ascciComplexPlot;
     NutmegComplexPlot binComplexPlot;
 
-    NutReader asciiReader = NutReader.getNutasciiReader(nutascii);
+    final NutReader asciiReader = NutReader.getNutasciiReader(nutascii);
     asciiReader.read().parse();
 
-    NutReader binReader = NutReader.getNutbinReader(nutbin);
+    final NutReader binReader = NutReader.getNutbinReader(nutbin);
     binReader.read().parse();
 
-    List<NutmegPlot> asciiPlots = asciiReader.getPlots();
-    List<NutmegPlot> binPlots = binReader.getPlots();
+    final List<NutmegPlot> asciiPlots = asciiReader.getPlots();
+    final List<NutmegPlot> binPlots = binReader.getPlots();
 
     if (asciiPlots.size() != binPlots.size()) {
       System.out.println(asciiPlots.size() + "-" + binPlots.size());
@@ -50,7 +50,7 @@ class NutmegComparisonTest {
         ascciRealPlot = (NutmegRealPlot) asciiPlots.get(i);
         binRealPlot = (NutmegRealPlot) binPlots.get(i);
 
-        for (String var : ascciRealPlot.getWaves()) {
+        for (final String var : ascciRealPlot.getWaves()) {
           for (int j = 0; j < ascciRealPlot.getNoOfPoints(); j++) {
 
             a = ascciRealPlot.getWave(var)[j];
@@ -58,7 +58,7 @@ class NutmegComparisonTest {
             c = Math.abs(a - b);
             d = Math.max(Math.max(Math.abs(a), Math.abs(b)), 1.0);
 
-            if (c / d >= ERROR) {
+            if ((c / d) >= ERROR) {
               fail("Error in plot=\"" + ascciRealPlot.getPlotname()
                   + "\", wave=\"" + var + "\" and index=" + j
                   + ".\nRelative error between ascii=" + a + " and binary=" + b
@@ -73,7 +73,7 @@ class NutmegComparisonTest {
         ascciComplexPlot = (NutmegComplexPlot) asciiPlots.get(i);
         binComplexPlot = (NutmegComplexPlot) binPlots.get(i);
 
-        for (String var : ascciComplexPlot.getWaves()) {
+        for (final String var : ascciComplexPlot.getWaves()) {
           for (int j = 0; j < ascciComplexPlot.getNoOfPoints(); j++) {
 
             a = ascciComplexPlot.getWave(var)[j].getReal();
@@ -81,7 +81,7 @@ class NutmegComparisonTest {
             c = Math.abs(a - b);
             d = Math.max(Math.max(Math.abs(a), Math.abs(b)), 1.0);
 
-            if (c / d >= ERROR) {
+            if ((c / d) >= ERROR) {
               fail("Error in plot=\"" + ascciComplexPlot.getPlotname()
                   + "\", wave=\"" + var + "\" and index=" + j
                   + ".\nRelative error between ascii.real=" + a
@@ -93,7 +93,7 @@ class NutmegComparisonTest {
             c = Math.abs(a - b);
             d = Math.max(Math.max(Math.abs(a), Math.abs(b)), 1.0);
 
-            if (c / d >= ERROR) {
+            if ((c / d) >= ERROR) {
               fail("Error in plot=\"" + ascciComplexPlot.getPlotname()
                   + "\", wave=\"" + var + "\" and index=" + j
                   + ".\nRelative error between ascii.imag=" + a

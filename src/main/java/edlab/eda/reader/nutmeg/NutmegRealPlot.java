@@ -10,10 +10,10 @@ import java.util.Set;
  */
 public class NutmegRealPlot extends NutmegPlot {
 
-  private Map<String, double[]> waves;
+  private final Map<String, double[]> waves;
 
-  private NutmegRealPlot(String plotname, int noOfVariables, int noOfPoints,
-      String refWave, Map<String, String> units, Map<String, double[]> waves) {
+  private NutmegRealPlot(final String plotname, final int noOfVariables, final int noOfPoints,
+      final String refWave, final Map<String, String> units, final Map<String, double[]> waves) {
     super(plotname, noOfVariables, noOfPoints, refWave, units);
     this.waves = waves;
   }
@@ -31,11 +31,11 @@ public class NutmegRealPlot extends NutmegPlot {
    * @param waves         - Waves
    * @return nutmegRealPlot - Plot
    */
-  public static NutmegRealPlot make(String plotname, int noOfVariables,
-      int noOfPoints, String refWave, Map<String, String> units,
-      Map<String, double[]> waves) {
+  public static NutmegRealPlot make(final String plotname, final int noOfVariables,
+      final int noOfPoints, final String refWave, final Map<String, String> units,
+      final Map<String, double[]> waves) {
 
-    NutmegRealPlot plot = new NutmegRealPlot(plotname, noOfVariables,
+    final NutmegRealPlot plot = new NutmegRealPlot(plotname, noOfVariables,
         noOfPoints, refWave, units, waves);
 
     if (noOfVariables != units.size()) {
@@ -47,25 +47,25 @@ public class NutmegRealPlot extends NutmegPlot {
       return null;
     }
 
-    for (String wave : units.keySet()) {
+    for (final String wave : units.keySet()) {
       if (units.get(wave) == null) {
         return null;
       }
     }
 
-    for (String wave : waves.keySet()) {
+    for (final String wave : waves.keySet()) {
       if (waves.get(wave) == null) {
         return null;
       }
     }
 
-    for (String wave : waves.keySet()) {
+    for (final String wave : waves.keySet()) {
       if (!units.containsKey(wave)) {
         return null;
       }
     }
 
-    for (String wave : waves.keySet()) {
+    for (final String wave : waves.keySet()) {
       if (waves.get(wave).length != noOfPoints) {
         return null;
       }
@@ -75,7 +75,7 @@ public class NutmegRealPlot extends NutmegPlot {
   }
 
   @Override
-  public boolean containsWave(String wave) {
+  public boolean containsWave(final String wave) {
     return this.waves.containsKey(wave);
   }
 
@@ -90,7 +90,7 @@ public class NutmegRealPlot extends NutmegPlot {
    * @param wave - name of the wave
    * @return wave - Wave as a double array if existing, null otherwise.
    */
-  public double[] getWave(String wave) {
+  public double[] getWave(final String wave) {
     return this.waves.get(wave);
   }
 

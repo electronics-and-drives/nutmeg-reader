@@ -1,6 +1,7 @@
 package edlab.eda.reader.nutmeg;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -17,13 +18,13 @@ public class NutasciiTest {
   @Test
   void test() {
 
-    readWave("./src/test/resources/rc1/spectre/nutascii.raw");
+    this.readWave("./src/test/resources/rc1/spectre/nutascii.raw");
 
   }
 
-  private void readWave(String path) {
+  private void readWave(final String path) {
     // Create a new reader
-    NutReader reader = NutReader
+    final NutReader reader = NutReader
         .getNutasciiReader("./src/test/resources/rc1/spectre/nutascii.raw");
 
     if (reader.read() == null) {
@@ -34,7 +35,7 @@ public class NutasciiTest {
       fail("Unable to parse " + path);
     }
 
-    List<NutmegPlot> plots = reader.getPlots();
+    final List<NutmegPlot> plots = reader.getPlots();
 
     if (plots.size() != 4) {
       fail("Number of plots mismatch");

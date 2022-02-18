@@ -11,14 +11,14 @@ import java.util.Set;
  */
 public abstract class NutmegPlot {
 
-  private int noOfWaves;
-  private int noOfPoints;
-  private String plotname;
-  private String refWave;
-  private Map<String, String> units;
+  private final int noOfWaves;
+  private final int noOfPoints;
+  private final String plotname;
+  private final String refWave;
+  private final Map<String, String> units;
 
-  protected NutmegPlot(String plotname, int noOfVariables, int noOfPoints,
-      String refWave, Map<String, String> units) {
+  protected NutmegPlot(final String plotname, final int noOfVariables, final int noOfPoints,
+      final String refWave, final Map<String, String> units) {
     this.units = units;
     this.plotname = plotname;
     this.noOfWaves = noOfVariables;
@@ -32,7 +32,7 @@ public abstract class NutmegPlot {
    * @return number of waves.
    */
   public int getNoOfWaves() {
-    return noOfWaves;
+    return this.noOfWaves;
   }
 
   /**
@@ -41,7 +41,7 @@ public abstract class NutmegPlot {
    * @return length of wave
    */
   public int getNoOfPoints() {
-    return noOfPoints;
+    return this.noOfPoints;
   }
 
   /**
@@ -50,7 +50,7 @@ public abstract class NutmegPlot {
    * @param wave - name of the wave
    * @return unit - unit of the wave
    */
-  public String getUnit(String wave) {
+  public String getUnit(final String wave) {
     return this.units.get(wave);
   }
 
@@ -60,7 +60,7 @@ public abstract class NutmegPlot {
    * @return plotname
    */
   public String getPlotname() {
-    return plotname;
+    return this.plotname;
   }
 
   /**
@@ -69,7 +69,7 @@ public abstract class NutmegPlot {
    * @return refWave
    */
   public String getRefWave() {
-    return refWave;
+    return this.refWave;
   }
 
   /**
@@ -109,13 +109,13 @@ public abstract class NutmegPlot {
    * @return map
    */
   public static Map<String, NutmegPlot> getPlotMap(
-      List<NutmegPlot> plots) {
+      final List<NutmegPlot> plots) {
 
-    Map<String, NutmegPlot> retval = new HashMap<String, NutmegPlot>();
+    final Map<String, NutmegPlot> retval = new HashMap<>();
 
     if (plots != null) {
 
-      for (NutmegPlot nutmegPlot : plots) {
+      for (final NutmegPlot nutmegPlot : plots) {
         retval.put(nutmegPlot.getPlotname(), nutmegPlot);
       }
     }

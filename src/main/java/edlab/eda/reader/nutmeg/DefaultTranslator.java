@@ -8,7 +8,7 @@ import org.apache.commons.text.translate.CharSequenceTranslator;
 public class DefaultTranslator extends CharSequenceTranslator {
 
   @Override
-  public int translate(CharSequence input, int index, Writer out)
+  public int translate(final CharSequence input, final int index, final Writer out)
       throws IOException {
     return 0;
   }

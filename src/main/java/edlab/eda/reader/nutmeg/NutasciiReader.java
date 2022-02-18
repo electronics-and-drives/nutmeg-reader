@@ -30,11 +30,11 @@ public class NutasciiReader extends NutReader {
   private Scanner scanner = null;
   private boolean scannerOpen = false;
 
-  private NutasciiReader(String file) {
+  private NutasciiReader(final String file) {
     super(file, new DefaultTranslator());
   }
 
-  private NutasciiReader(String file, CharSequenceTranslator translator) {
+  private NutasciiReader(final String file, final CharSequenceTranslator translator) {
     super(file, translator);
   }
 
@@ -46,9 +46,9 @@ public class NutasciiReader extends NutReader {
    * @return nutReader Reader for the corresponding waveform, <code>null</code>
    *         when the file is not existing.
    */
-  public static NutReader getNutReader(String file) {
+  public static NutReader getNutReader(final String file) {
 
-    NutReader nutReader = new NutasciiReader(file);
+    final NutReader nutReader = new NutasciiReader(file);
 
     if (nutReader.getFile() == null) {
       return null;
@@ -66,10 +66,10 @@ public class NutasciiReader extends NutReader {
    * @return nutReader Reader for the corresponding waveform, <code>null</code>
    *         when the file is not existing.
    */
-  public static NutReader getNutReader(String file,
-      CharSequenceTranslator translator) {
+  public static NutReader getNutReader(final String file,
+      final CharSequenceTranslator translator) {
 
-    NutReader nutReader = new NutasciiReader(file, translator);
+    final NutReader nutReader = new NutasciiReader(file, translator);
 
     if (nutReader.getFile() == null) {
       return null;
@@ -83,15 +83,15 @@ public class NutasciiReader extends NutReader {
 
     try {
 
-      Scanner scn = new Scanner(getFile());
+      final Scanner scn = new Scanner(this.getFile());
       scn.useDelimiter("\\Z");
-      data = scn.next();
+      this.data = scn.next();
       scn.close();
 
       return this;
 
-    } catch (FileNotFoundException e) {
-      System.err.println("Unable to open file " + getFile().getAbsolutePath()
+    } catch (final FileNotFoundException e) {
+      System.err.println("Unable to open file " + this.getFile().getAbsolutePath()
           + ":\n" + e.toString());
 
       return null;
@@ -101,9 +101,9 @@ public class NutasciiReader extends NutReader {
   @Override
   public NutReader parse() {
 
-    this.scanner = new Scanner(data);
+    this.scanner = new Scanner(this.data);
     this.scannerOpen = true;
-    this.plots = new LinkedList<NutmegPlot>();
+    this.plots = new LinkedList<>();
 
     String plotname;
     FLAG flag;
@@ -122,28 +122,28 @@ public class NutasciiReader extends NutReader {
     HashMap<String, Complex[]> complexWaves;
 
     // Iterate until no new plots are in file
-    while ((plotname = getNextPlot()) != null) {
+    while ((plotname = this.getNextPlot()) != null) {
 
-      flag = getFlag();
+      flag = this.getFlag();
 
       if (!flag.equals(FLAG.NONE)) {
 
-        noOfVariables = getNumberOfVariables();
-        noOfPoints = getNumberOfPoints();
+        noOfVariables = this.getNumberOfVariables();
+        noOfPoints = this.getNumberOfPoints();
 
         if (noOfPoints == 0) {
           noOfPoints = 1;
         }
 
-        if (noOfVariables > 0 && noOfPoints > 0) {
-          variables = getVariables(noOfVariables);
+        if ((noOfVariables > 0) && (noOfPoints > 0)) {
+          variables = this.getVariables(noOfVariables);
 
           if (flag.equals(FLAG.REAL)) {
 
-            units = new HashMap<String, String>();
-            realWaves = new HashMap<String, double[]>();
+            units = new HashMap<>();
+            realWaves = new HashMap<>();
 
-            realVals = readDoubleValues(noOfPoints, noOfVariables);
+            realVals = this.readDoubleValues(noOfPoints, noOfVariables);
 
             for (int i = 0; i < variables.length; i++) {
 
@@ -166,10 +166,10 @@ public class NutasciiReader extends NutReader {
 
           } else if (flag.equals(FLAG.COMPLEX)) {
 
-            units = new HashMap<String, String>();
-            complexWaves = new HashMap<String, Complex[]>();
+            units = new HashMap<>();
+            complexWaves = new HashMap<>();
 
-            complexVals = readComplexValues(noOfPoints, noOfVariables);
+            complexVals = this.readComplexValues(noOfPoints, noOfVariables);
 
             for (int i = 0; i < variables.length; i++) {
 
@@ -186,7 +186,7 @@ public class NutasciiReader extends NutReader {
                 noOfPoints, variables[0][0], units, complexWaves);
 
             if (nutmegComplexPlot != null) {
-              plots.add(nutmegComplexPlot);
+              this.plots.add(nutmegComplexPlot);
             }
           }
         }
@@ -206,13 +206,13 @@ public class NutasciiReader extends NutReader {
    */
   private String getNextPlot() {
 
-    if (scannerOpen) {
+    if (this.scannerOpen) {
 
       String line;
 
-      while (scanner.hasNextLine()) {
+      while (this.scanner.hasNextLine()) {
 
-        line = scanner.nextLine();
+        line = this.scanner.nextLine();
 
         if (line.startsWith(PLOT_ID)) {
           return line.substring(PLOT_ID.length(), line.length()).trim();
@@ -234,9 +234,9 @@ public class NutasciiReader extends NutReader {
    */
   private FLAG getFlag() {
 
-    if (scannerOpen && scanner.hasNextLine()) {
+    if (this.scannerOpen && this.scanner.hasNextLine()) {
 
-      String line = scanner.nextLine();
+      String line = this.scanner.nextLine();
 
       if (line.startsWith(FLAGS_ID)) {
 
@@ -266,8 +266,8 @@ public class NutasciiReader extends NutReader {
    */
   private int getNumberOfVariables() {
 
-    if (scannerOpen && scanner.hasNextLine()) {
-      String line = scanner.nextLine();
+    if (this.scannerOpen && this.scanner.hasNextLine()) {
+      String line = this.scanner.nextLine();
 
       if (line.startsWith(NO_OF_VAR_ID)) {
 
@@ -290,9 +290,9 @@ public class NutasciiReader extends NutReader {
    */
   private int getNumberOfPoints() {
 
-    if (scannerOpen && scanner.hasNextLine()) {
+    if (this.scannerOpen && this.scanner.hasNextLine()) {
 
-      String line = scanner.nextLine();
+      String line = this.scanner.nextLine();
 
       if (line.startsWith(NO_OF_POINTS_ID)) {
 
@@ -314,16 +314,16 @@ public class NutasciiReader extends NutReader {
    * @param noOfVariables - number of variables to be read.
    * @return array of variable names and units.
    */
-  private String[][] getVariables(int noOfvariables) {
+  private String[][] getVariables(final int noOfvariables) {
 
     String[] refracturedLine;
-    String[][] variables = new String[noOfvariables][2];
+    final String[][] variables = new String[noOfvariables][2];
 
     for (int i = 0; i < variables.length; i++) {
 
-      if (scannerOpen && scanner.hasNextLine()) {
+      if (this.scannerOpen && this.scanner.hasNextLine()) {
 
-        String line = scanner.nextLine();
+        String line = this.scanner.nextLine();
 
         if (i == 0) {
 
@@ -336,7 +336,7 @@ public class NutasciiReader extends NutReader {
         }
 
         if (line.length() == 0) {
-          line = scanner.nextLine();
+          line = this.scanner.nextLine();
         }
 
         refracturedLine = line.trim().split("\\s");
@@ -367,28 +367,28 @@ public class NutasciiReader extends NutReader {
    * @param noOfVariables - number of variables to be read.
    * @return double array with values.
    */
-  private Complex[][] readComplexValues(int noOfPoints, int noOfVariables) {
+  private Complex[][] readComplexValues(final int noOfPoints, final int noOfVariables) {
 
-    Complex[][] vals = new Complex[noOfVariables][noOfPoints];
+    final Complex[][] vals = new Complex[noOfVariables][noOfPoints];
 
     String[] splitComplexNo;
 
     int idx;
 
-    if (scannerOpen && scanner.hasNextLine()) {
+    if (this.scannerOpen && this.scanner.hasNextLine()) {
 
-      String line = scanner.nextLine();
+      final String line = this.scanner.nextLine();
 
       if (line.startsWith(VALS_ASCII_ID)) {
 
-        String[] strArr = readAscii(noOfPoints * (noOfVariables + 1));
+        final String[] strArr = this.readAscii(noOfPoints * (noOfVariables + 1));
 
         if (strArr != null) {
 
           for (int i = 0; i < noOfPoints; i++) {
             for (int j = 0; j < noOfVariables; j++) {
 
-              idx = i * (noOfVariables + 1) + j + 1;
+              idx = (i * (noOfVariables + 1)) + j + 1;
 
               splitComplexNo = strArr[idx].split(",");
 
@@ -418,25 +418,25 @@ public class NutasciiReader extends NutReader {
    * @param noOfVariables - number of variables to be read.
    * @return double array with values.
    */
-  private double[][] readDoubleValues(int noOfPoints, int noOfVariables) {
+  private double[][] readDoubleValues(final int noOfPoints, final int noOfVariables) {
 
-    double[][] vals = new double[noOfVariables][noOfPoints];
+    final double[][] vals = new double[noOfVariables][noOfPoints];
     int idx;
 
-    if (scannerOpen && scanner.hasNextLine()) {
+    if (this.scannerOpen && this.scanner.hasNextLine()) {
 
-      String line = scanner.nextLine();
+      final String line = this.scanner.nextLine();
 
       if (line.startsWith(VALS_ASCII_ID)) {
 
-        String[] strArr = readAscii(noOfPoints * (noOfVariables + 1));
+        final String[] strArr = this.readAscii(noOfPoints * (noOfVariables + 1));
 
         if (strArr != null) {
 
           for (int i = 0; i < noOfPoints; i++) {
             for (int j = 0; j < noOfVariables; j++) {
 
-              idx = i * (noOfVariables + 1) + j + 1;
+              idx = (i * (noOfVariables + 1)) + j + 1;
               vals[j][i] = Double.parseDouble(strArr[idx]);
             }
           }
@@ -461,15 +461,15 @@ public class NutasciiReader extends NutReader {
    * @param noOfElems - number of elements to be read from stream.
    * @return array of strings.
    */
-  private String[] readAscii(int noOfElems) {
+  private String[] readAscii(final int noOfElems) {
 
-    String[] result = new String[noOfElems];
+    final String[] result = new String[noOfElems];
 
     for (int i = 0; i < result.length; i++) {
 
-      if (scannerOpen && scanner.hasNext()) {
+      if (this.scannerOpen && this.scanner.hasNext()) {
 
-        result[i] = scanner.next();
+        result[i] = this.scanner.next();
 
       } else {
         this.scanner.close();

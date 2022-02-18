@@ -4,21 +4,21 @@ import java.util.List;
 import java.util.Set;
 
 public class NutmegTest2 {
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
 
     // Create a new reader
-    NutReader reader = NutReader
+    final NutReader reader = NutReader
         .getNutbinReader("./src/test/resources/rc1/ngspice/nutbin.raw");
 
     // Read and parse the nutascii
     reader.read().parse();
 
     // Get all plots from the reader
-    List<NutmegPlot> plots = reader.getPlots();
+    final List<NutmegPlot> plots = reader.getPlots();
     System.out.println(plots.size());
     
     // Get nutmeg plot from list
-    NutmegPlot nutmegPlot = plots.get(0);
+    final NutmegPlot nutmegPlot = plots.get(0);
 
     // Get name of plot
     System.out.println(nutmegPlot.getPlotname());
@@ -34,6 +34,7 @@ public class NutmegTest2 {
     
     // Get set of all waves from plot
     @SuppressWarnings("unused")
+    final
     Set<String> waves = nutmegPlot.getWaves();
 
     // Check if wave with name "I" is part of plot
@@ -45,10 +46,11 @@ public class NutmegTest2 {
     if (nutmegPlot instanceof NutmegRealPlot) {
 
       // Cast plot to real plot
-      NutmegRealPlot nutmegRealPlot = (NutmegRealPlot) nutmegPlot;
+      final NutmegRealPlot nutmegRealPlot = (NutmegRealPlot) nutmegPlot;
 
       // Get wave of wave with name "I"
       @SuppressWarnings("unused")
+      final
       double[] wave = nutmegRealPlot.getWave("I");
     }
   }

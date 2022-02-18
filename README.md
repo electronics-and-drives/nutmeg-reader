@@ -94,7 +94,7 @@ Add the dependency to your project
 <dependency>
   <groupId>edlab.eda</groupId>
   <artifactId>reader.nutmeg</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
 </dependency>
 ```
 
@@ -288,7 +288,7 @@ plt.show()
 
 ## License
 
-Copyright (C) 2021, [Electronics & Drives](https://www.electronics-and-drives.de/)
+Copyright (C) 2022, [Electronics & Drives](https://www.electronics-and-drives.de/)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

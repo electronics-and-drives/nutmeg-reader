@@ -11,10 +11,10 @@ import org.apache.commons.math3.complex.Complex;
  */
 public class NutmegComplexPlot extends NutmegPlot {
 
-  private Map<String, Complex[]> waves;
+  private final Map<String, Complex[]> waves;
 
-  private NutmegComplexPlot(String plotname, int noOfVariables, int noOfPoints,
-      String refWave, Map<String, String> units, Map<String, Complex[]> waves) {
+  private NutmegComplexPlot(final String plotname, final int noOfVariables, final int noOfPoints,
+      final String refWave, final Map<String, String> units, final Map<String, Complex[]> waves) {
     super(plotname, noOfVariables, noOfPoints, refWave, units);
     this.waves = waves;
   }
@@ -32,40 +32,36 @@ public class NutmegComplexPlot extends NutmegPlot {
    * @param waves         - Waves
    * @return nutmegRealPlot - Plot
    */
-  public static NutmegComplexPlot make(String plotname, int noOfVariables,
-      int noOfPoints, String refWave, Map<String, String> units,
-      Map<String, Complex[]> waves) {
+  public static NutmegComplexPlot make(final String plotname, final int noOfVariables,
+      final int noOfPoints, final String refWave, final Map<String, String> units,
+      final Map<String, Complex[]> waves) {
 
-    NutmegComplexPlot plot = new NutmegComplexPlot(plotname, noOfVariables,
+    final NutmegComplexPlot plot = new NutmegComplexPlot(plotname, noOfVariables,
         noOfPoints, refWave, units, waves);
 
-    if (noOfVariables != units.size()) {
+    if ((noOfVariables != units.size()) || (noOfVariables != waves.size())) {
       return null;
     }
 
-    if (noOfVariables != waves.size()) {
-      return null;
-    }
-
-    for (String wave : units.keySet()) {
+    for (final String wave : units.keySet()) {
       if (units.get(wave) == null) {
         return null;
       }
     }
 
-    for (String wave : waves.keySet()) {
+    for (final String wave : waves.keySet()) {
       if (waves.get(wave) == null) {
         return null;
       }
     }
 
-    for (String wave : waves.keySet()) {
+    for (final String wave : waves.keySet()) {
       if (!units.containsKey(wave)) {
         return null;
       }
     }
 
-    for (String wave : waves.keySet()) {
+    for (final String wave : waves.keySet()) {
       if (waves.get(wave).length != noOfPoints) {
         return null;
       }
@@ -81,12 +77,12 @@ public class NutmegComplexPlot extends NutmegPlot {
    * @param wave - name of the wave
    * @return wave - Wave as a double array if existing, null otherwise.
    */
-  public Complex[] getWave(String wave) {
+  public Complex[] getWave(final String wave) {
     return this.waves.get(wave);
   }
 
   @Override
-  public boolean containsWave(String wave) {
+  public boolean containsWave(final String wave) {
     return this.waves.containsKey(wave);
   }
 

@@ -41,7 +41,7 @@ public abstract class NutReader {
      * Undefined waveform.
      */
     NONE
-  };
+  }
 
   protected static final String REAL_ID = "real";
   protected static final String COMPLEX_ID = "complex";
@@ -52,14 +52,14 @@ public abstract class NutReader {
    * @param file       Nutmeg waveform file
    * @param translator Translator for wave names
    */
-  protected NutReader(String file, CharSequenceTranslator translator) {
+  protected NutReader(final String file, final CharSequenceTranslator translator) {
     this.file = new File(file);
 
     if (this.file.exists()) {
 
       if (this.file.canRead()) {
 
-        this.plots = new LinkedList<NutmegPlot>();
+        this.plots = new LinkedList<>();
       } else {
         System.err.println("File " + file + " not readable");
         this.file = null;
@@ -87,7 +87,7 @@ public abstract class NutReader {
    * @return list - list of all plots
    */
   public List<NutmegPlot> getPlots() {
-    return plots;
+    return this.plots;
   }
 
   /**
@@ -98,7 +98,7 @@ public abstract class NutReader {
    * @return nutReader Reader for the corresponding waveform <code>null</code>
    *         when the file is not existing
    */
-  public static NutReader getNutasciiReader(String file) {
+  public static NutReader getNutasciiReader(final String file) {
     return NutasciiReader.getNutReader(file);
   }
 
@@ -111,8 +111,8 @@ public abstract class NutReader {
    * @return nutReader Reader for the corresponding waveform <code>null</code>
    *         when the file is not existing
    */
-  public static NutReader getNutasciiReader(String file,
-      CharSequenceTranslator translator) {
+  public static NutReader getNutasciiReader(final String file,
+      final CharSequenceTranslator translator) {
     return NutasciiReader.getNutReader(file, translator);
   }
 
@@ -124,7 +124,7 @@ public abstract class NutReader {
    * @return nutReader - Reader for the corresponding waveform,
    *         <code>null</code> when the file is not existing
    */
-  public static NutReader getNutbinReader(String file) {
+  public static NutReader getNutbinReader(final String file) {
     return NutbinReader.getNutReader(file);
   }
 
@@ -137,8 +137,8 @@ public abstract class NutReader {
    * @return nutReader - Reader for the corresponding waveform,
    *         <code>null</code> when the file is not existing
    */
-  public static NutReader getNutbinReader(String file,
-      CharSequenceTranslator translator) {
+  public static NutReader getNutbinReader(final String file,
+      final CharSequenceTranslator translator) {
     return NutbinReader.getNutReader(file, translator);
   }
 

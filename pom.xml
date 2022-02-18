@@ -4,16 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edlab.eda</groupId>
 	<artifactId>reader.nutmeg</artifactId>
-	<version>1.0.3</version>
-
-	<distributionManagement>
-		<repository>
-			<id>github</id>
-			<name>GitHub electronics-and-drives Apache Maven Packages</name>
-			<url>https://maven.pkg.github.com/electronics-and-drives/nutmeg-reader</url>
-		</repository>
-	</distributionManagement>
-
+	<version>1.0.4</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -122,6 +113,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	
 	<organization>
 		<name>Electronics &amp; Drives</name>
 		<url>https://www.electronics-and-drives.de/</url>
