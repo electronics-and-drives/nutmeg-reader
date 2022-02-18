@@ -1,5 +1,7 @@
 package edlab.eda.reader.nutmeg;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,13 +19,11 @@ public abstract class NutmegPlot {
 
   protected NutmegPlot(String plotname, int noOfVariables, int noOfPoints,
       String refWave, Map<String, String> units) {
-
     this.units = units;
     this.plotname = plotname;
     this.noOfWaves = noOfVariables;
     this.refWave = refWave;
     this.noOfPoints = noOfPoints;
-
   }
 
   /**
@@ -100,4 +100,25 @@ public abstract class NutmegPlot {
    * @return True if plot contains real waves
    */
   public abstract boolean isReal();
+
+  /**
+   * Create a map from a list of {@link NutmegPlot}. The key corresponds to the
+   * plotname and the value to the {@link NutmegPlot}
+   * 
+   * @param plots list of plots
+   * @return map
+   */
+  public static Map<String, NutmegPlot> getPlotMap(
+      List<NutmegPlot> plots) {
+
+    Map<String, NutmegPlot> retval = new HashMap<String, NutmegPlot>();
+
+    if (plots != null) {
+
+      for (NutmegPlot nutmegPlot : plots) {
+        retval.put(nutmegPlot.getPlotname(), nutmegPlot);
+      }
+    }
+    return retval;
+  }
 }

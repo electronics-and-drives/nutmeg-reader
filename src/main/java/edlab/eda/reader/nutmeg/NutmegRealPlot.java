@@ -3,6 +3,7 @@ package edlab.eda.reader.nutmeg;
 import java.util.Map;
 import java.util.Set;
 
+
 /**
  * Plot consisting of real waveforms
  *
@@ -71,7 +72,6 @@ public class NutmegRealPlot extends NutmegPlot {
     }
 
     return plot;
-
   }
 
   @Override

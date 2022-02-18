@@ -10,7 +10,6 @@ import org.apache.commons.text.translate.CharSequenceTranslator;
 
 /**
  * Reader for a Nutmeg waveform file in ASCII syntax.
- *
  */
 public class NutasciiReader extends NutReader {
 
@@ -97,7 +96,6 @@ public class NutasciiReader extends NutReader {
 
       return null;
     }
-
   }
 
   @Override

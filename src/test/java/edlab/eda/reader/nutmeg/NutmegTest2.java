@@ -33,6 +33,7 @@ public class NutmegTest2 {
     nutmegPlot.getRefWave();
     
     // Get set of all waves from plot
+    @SuppressWarnings("unused")
     Set<String> waves = nutmegPlot.getWaves();
 
     // Check if wave with name "I" is part of plot

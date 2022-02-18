@@ -7,11 +7,11 @@
 	<version>1.0.3</version>
 
 	<distributionManagement>
-	   <repository>
-	     <id>github</id>
-	     <name>GitHub electronics-and-drives Apache Maven Packages</name>
-	     <url>https://maven.pkg.github.com/electronics-and-drives/nutmeg-reader</url>
-	   </repository>
+		<repository>
+			<id>github</id>
+			<name>GitHub electronics-and-drives Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/electronics-and-drives/nutmeg-reader</url>
+		</repository>
 	</distributionManagement>
 
 
