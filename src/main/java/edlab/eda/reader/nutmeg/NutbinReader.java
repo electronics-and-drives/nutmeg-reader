@@ -10,8 +10,7 @@ import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.text.translate.CharSequenceTranslator;
 
 /**
- * Reader for a Nutmeg waveform file in binary syntax.
- *
+
  */
 public class NutbinReader extends NutReader {
 
@@ -41,7 +40,8 @@ public class NutbinReader extends NutReader {
     super(file, new DefaultTranslator());
   }
 
-  private NutbinReader(final String file, final CharSequenceTranslator translator) {
+  private NutbinReader(final String file,
+      final CharSequenceTranslator translator) {
     super(file, translator);
   }
 
@@ -138,22 +138,23 @@ public class NutbinReader extends NutReader {
 
     FLAG flag = FLAG.NONE;
 
-    while ((idx = getNextPos(this.data, idx, PLOT_ID)) > 0) {
+    while ((idx = this.getNextPosition(idx, PLOT_ID)) > 0) {
 
       plotNameIdx[START] = idx;
-      idx = jmpToNewline(this.data, idx);
+      idx = this.jumpToNewline(idx);
       plotNameIdx[STOP] = idx - 1;
 
-      idx = flagIdx[START] = getNextPos(this.data, idx + 1, FLAGS_ID);
-      idx = jmpToNewline(this.data, idx);
+      idx = flagIdx[START] = this.getNextPosition(idx + 1, FLAGS_ID);
+      idx = this.jumpToNewline(idx);
       flagIdx[STOP] = idx - 1;
 
-      idx = noOfVarsIdx[START] = getNextPos(this.data, idx + 1, NO_OF_VAR_ID);
-      idx = jmpToNewline(this.data, idx);
+      idx = noOfVarsIdx[START] = this.getNextPosition(idx + 1, NO_OF_VAR_ID);
+      idx = this.jumpToNewline(idx);
       noOfVarsIdx[STOP] = idx - 1;
 
-      idx = noOfPointsIdx[START] = getNextPos(this.data, idx + 1, NO_OF_POINTS_ID);
-      idx = jmpToNewline(this.data, idx);
+      idx = noOfPointsIdx[START] = this.getNextPosition(idx + 1,
+          NO_OF_POINTS_ID);
+      idx = this.jumpToNewline(idx);
       noOfPointsIdx[STOP] = idx - 1;
 
       if ((flagIdx[START] > 0) & (noOfVarsIdx[START] > 0)
@@ -179,13 +180,12 @@ public class NutbinReader extends NutReader {
           try {
             str = new String(this.data, noOfVarsIdx[START],
                 (noOfVarsIdx[STOP] - noOfVarsIdx[START]) + 1);
-            str = str.trim();
             noOfVars = Integer.parseInt(str);
 
             str = new String(this.data, noOfPointsIdx[START],
                 (noOfPointsIdx[STOP] - noOfPointsIdx[START]) + 1);
-            str = str.trim();
             noOfPoints = Integer.parseInt(str);
+
           } catch (final Exception e) {
             flag = FLAG.NONE;
           }
@@ -193,14 +193,14 @@ public class NutbinReader extends NutReader {
 
         if (flag != FLAG.NONE) {
 
-          idx = getNextPos(this.data, idx + 1, VARS_ID);
+          idx = this.getNextPosition(idx + 1, VARS_ID);
 
           varNames = new String[noOfVars];
           varUnit = new String[noOfVars];
 
           for (int i = 0; i < noOfVars; i++) {
 
-            eol = jmpToNewline(this.data, idx);
+            eol = this.jumpToNewline(idx);
 
             if (eol == idx) {
               flag = FLAG.NONE;
@@ -226,7 +226,7 @@ public class NutbinReader extends NutReader {
 
         if (flag != FLAG.NONE) {
 
-          binaryStartIdx = getNextPos(this.data, idx, VALS_BINARY_ID);
+          binaryStartIdx = this.getNextPosition(idx, VALS_BINARY_ID);
 
           if (noOfPoints == 0) {
             noOfPoints = 1;
@@ -245,14 +245,14 @@ public class NutbinReader extends NutReader {
 
               for (int j = 0; j < noOfPoints; j++) {
                 realWave[j] = ByteBuffer.wrap(this.data,
-                    (binaryStartIdx + ((i + (j * noOfVars)) * BYTES_PER_NUM)) - 1,
+                    (binaryStartIdx + ((i + (j * noOfVars)) * BYTES_PER_NUM))
+                        - 1,
                     BYTES_PER_NUM).getDouble();
               }
 
               if (realWaves.containsKey(varNames[i])) {
                 realNoOfVars--;
               } else {
-
                 realWaves.put(this.translator.translate(varNames[i]), realWave);
                 units.put(varNames[i], varUnit[i]);
               }
@@ -265,7 +265,7 @@ public class NutbinReader extends NutReader {
               this.plots.add(nutmegRealPlot);
             }
 
-            idx += (1 * noOfPoints * noOfVars * BYTES_PER_NUM) + 1;
+            idx += (noOfPoints * noOfVars * BYTES_PER_NUM) + 1;
 
           } else {
 
@@ -279,8 +279,8 @@ public class NutbinReader extends NutReader {
               for (int j = 0; j < noOfPoints; j++) {
                 complex = new Complex(
                     ByteBuffer.wrap(this.data,
-                        (binaryStartIdx + (2 * (i + (j * noOfVars)) * BYTES_PER_NUM))
-                            - 1,
+                        (binaryStartIdx
+                            + (2 * (i + (j * noOfVars)) * BYTES_PER_NUM)) - 1,
                         BYTES_PER_NUM).getDouble(),
                     ByteBuffer
                         .wrap(this.data,
@@ -324,11 +324,11 @@ public class NutbinReader extends NutReader {
    * @param start - index from which on the data array is searched.
    * @return - index in data where the pattern starts
    */
-  private static int jmpToNewline(final byte[] data, final int start) {
+  private int jumpToNewline(final int start) {
 
     int i = start;
 
-    while ((data[i] != NEWLINE) && (i < data.length)) {
+    while ((this.data[i] != NEWLINE) && (i < this.data.length)) {
       i++;
     }
 
@@ -338,12 +338,11 @@ public class NutbinReader extends NutReader {
   /**
    * Finds the next occurrence of pattern in data starting from index start.
    * 
-   * @param data    - array with data
    * @param start   - index from which on the data array is searched.
    * @param pattern - array with pattern to be searched.
    * @return index - index in data where the pattern starts
    */
-  private static int getNextPos(final byte[] data, final int start, final byte[] pattern) {
+  private int getNextPosition(final int start, final byte[] pattern) {
 
     int retval = -1;
 
@@ -352,7 +351,7 @@ public class NutbinReader extends NutReader {
 
     boolean patternFound = false;
 
-    while (!patternFound && (i < (data.length - pattern.length))) {
+    while (!patternFound && (i < (this.data.length - pattern.length))) {
 
       patternFound = true;
 
@@ -360,7 +359,7 @@ public class NutbinReader extends NutReader {
 
       while (patternFound && (j < pattern.length)) {
 
-        if (data[i + j] != pattern[j]) {
+        if (this.data[i + j] != pattern[j]) {
           patternFound = false;
         }
 
@@ -369,6 +368,10 @@ public class NutbinReader extends NutReader {
 
       if (patternFound) {
         retval = i + pattern.length + 1;
+
+        while (this.data[retval] == 32) {
+          retval++;
+        }
       }
 
       i++;
