@@ -3,17 +3,16 @@ package edlab.eda.reader.nutmeg;
 import java.util.Map;
 import java.util.Set;
 
-
 /**
  * Plot consisting of real waveforms
- *
  */
-public class NutmegRealPlot extends NutmegPlot {
+public final class NutmegRealPlot extends NutmegPlot {
 
   private final Map<String, double[]> waves;
 
-  private NutmegRealPlot(final String plotname, final int noOfVariables, final int noOfPoints,
-      final String refWave, final Map<String, String> units, final Map<String, double[]> waves) {
+  private NutmegRealPlot(final String plotname, final int noOfVariables,
+      final int noOfPoints, final String refWave,
+      final Map<String, String> units, final Map<String, double[]> waves) {
     super(plotname, noOfVariables, noOfPoints, refWave, units);
     this.waves = waves;
   }
@@ -23,17 +22,17 @@ public class NutmegRealPlot extends NutmegPlot {
    * valid, a {@link edlab.eda.reader.nutmeg.NutmegRealPlot NutmegRealPlot} is
    * returned.
    * 
-   * @param plotname      - Name of the plot
-   * @param noOfVariables - Number of variables
-   * @param noOfPoints    - Number of points
-   * @param refWave       - Name of reference waveform
-   * @param units         - Units
-   * @param waves         - Waves
-   * @return nutmegRealPlot - Plot
+   * @param plotname      Name of the plot
+   * @param noOfVariables Number of variables
+   * @param noOfPoints    Number of points
+   * @param refWave       Name of reference waveform
+   * @param units         Units
+   * @param waves         Waves
+   * @return nutmegRealPlot
    */
-  public static NutmegRealPlot make(final String plotname, final int noOfVariables,
-      final int noOfPoints, final String refWave, final Map<String, String> units,
-      final Map<String, double[]> waves) {
+  public static NutmegRealPlot make(final String plotname,
+      final int noOfVariables, final int noOfPoints, final String refWave,
+      final Map<String, String> units, final Map<String, double[]> waves) {
 
     final NutmegRealPlot plot = new NutmegRealPlot(plotname, noOfVariables,
         noOfPoints, refWave, units, waves);
@@ -87,8 +86,8 @@ public class NutmegRealPlot extends NutmegPlot {
   /**
    * Returns a waveform with a given name.
    * 
-   * @param wave - name of the wave
-   * @return wave - Wave as a double array if existing, null otherwise.
+   * @param wave name of the wave
+   * @return wave as a double array if existing, <code>null</code> otherwise.
    */
   public double[] getWave(final String wave) {
     return this.waves.get(wave);

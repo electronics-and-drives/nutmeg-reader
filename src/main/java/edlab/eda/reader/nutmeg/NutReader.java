@@ -7,8 +7,7 @@ import java.util.List;
 import org.apache.commons.text.translate.CharSequenceTranslator;
 
 /**
- * Reader for a Nutmeg waveform file.
- *
+ * Reader for a Nutmeg waveform file
  */
 public abstract class NutReader {
 
@@ -17,12 +16,15 @@ public abstract class NutReader {
    */
   protected LinkedList<NutmegPlot> plots;
 
+  /**
+   * Nutmeg file
+   */
   private File file;
 
   /**
    * Translator for wave names
    */
-  protected CharSequenceTranslator translator;
+  protected final CharSequenceTranslator translator;
 
   /**
    * Flag that indicates whether a waveform is real or complex.
@@ -52,7 +54,9 @@ public abstract class NutReader {
    * @param file       Nutmeg waveform file
    * @param translator Translator for wave names
    */
-  protected NutReader(final String file, final CharSequenceTranslator translator) {
+  protected NutReader(final String file,
+      final CharSequenceTranslator translator) {
+    
     this.file = new File(file);
 
     if (this.file.exists()) {
@@ -157,5 +161,4 @@ public abstract class NutReader {
    *         otherwise.
    */
   public abstract NutReader parse();
-
 }

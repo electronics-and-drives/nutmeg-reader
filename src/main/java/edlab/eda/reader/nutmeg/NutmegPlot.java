@@ -6,8 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Plot consisting of waveforms.
- *
+ * Plot consisting of waveforms
  */
 public abstract class NutmegPlot {
 

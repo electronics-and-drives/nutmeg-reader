@@ -11,7 +11,7 @@ import org.apache.commons.text.translate.CharSequenceTranslator;
 /**
  * Reader for a Nutmeg waveform file in ASCII syntax.
  */
-public class NutasciiReader extends NutReader {
+public final class NutasciiReader extends NutReader {
 
   @SuppressWarnings("unused")
   private static final String TITLE_ID = "Title:";
@@ -34,7 +34,8 @@ public class NutasciiReader extends NutReader {
     super(file, new DefaultTranslator());
   }
 
-  private NutasciiReader(final String file, final CharSequenceTranslator translator) {
+  private NutasciiReader(final String file,
+      final CharSequenceTranslator translator) {
     super(file, translator);
   }
 
@@ -91,8 +92,9 @@ public class NutasciiReader extends NutReader {
       return this;
 
     } catch (final FileNotFoundException e) {
-      System.err.println("Unable to open file " + this.getFile().getAbsolutePath()
-          + ":\n" + e.toString());
+      
+      System.err.println("Unable to open file "
+          + this.getFile().getAbsolutePath() + ":\n" + e.toString());
 
       return null;
     }
@@ -367,7 +369,8 @@ public class NutasciiReader extends NutReader {
    * @param noOfVariables - number of variables to be read.
    * @return double array with values.
    */
-  private Complex[][] readComplexValues(final int noOfPoints, final int noOfVariables) {
+  private Complex[][] readComplexValues(final int noOfPoints,
+      final int noOfVariables) {
 
     final Complex[][] vals = new Complex[noOfVariables][noOfPoints];
 
@@ -381,7 +384,8 @@ public class NutasciiReader extends NutReader {
 
       if (line.startsWith(VALS_ASCII_ID)) {
 
-        final String[] strArr = this.readAscii(noOfPoints * (noOfVariables + 1));
+        final String[] strArr = this
+            .readAscii(noOfPoints * (noOfVariables + 1));
 
         if (strArr != null) {
 
@@ -418,7 +422,8 @@ public class NutasciiReader extends NutReader {
    * @param noOfVariables - number of variables to be read.
    * @return double array with values.
    */
-  private double[][] readDoubleValues(final int noOfPoints, final int noOfVariables) {
+  private double[][] readDoubleValues(final int noOfPoints,
+      final int noOfVariables) {
 
     final double[][] vals = new double[noOfVariables][noOfPoints];
     int idx;
@@ -429,7 +434,8 @@ public class NutasciiReader extends NutReader {
 
       if (line.startsWith(VALS_ASCII_ID)) {
 
-        final String[] strArr = this.readAscii(noOfPoints * (noOfVariables + 1));
+        final String[] strArr = this
+            .readAscii(noOfPoints * (noOfVariables + 1));
 
         if (strArr != null) {
 

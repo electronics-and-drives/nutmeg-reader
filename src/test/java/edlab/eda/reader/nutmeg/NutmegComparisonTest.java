@@ -64,7 +64,6 @@ class NutmegComparisonTest {
                   + ".\nRelative error between ascii=" + a + " and binary=" + b
                   + "is greater than " + ERROR);
             }
-
           }
         }
 

@@ -5,11 +5,14 @@ import java.io.Writer;
 
 import org.apache.commons.text.translate.CharSequenceTranslator;
 
-public class DefaultTranslator extends CharSequenceTranslator {
+/**
+ * Default translator for waveform names
+ */
+final class DefaultTranslator extends CharSequenceTranslator {
 
   @Override
-  public int translate(final CharSequence input, final int index, final Writer out)
-      throws IOException {
+  public int translate(final CharSequence input, final int index,
+      final Writer out) throws IOException {
     return 0;
   }
 }

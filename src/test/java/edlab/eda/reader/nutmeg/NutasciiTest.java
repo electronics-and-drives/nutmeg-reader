@@ -17,9 +17,7 @@ public class NutasciiTest {
 
   @Test
   void test() {
-
     this.readWave("./src/test/resources/rc1/spectre/nutascii.raw");
-
   }
 
   private void readWave(final String path) {

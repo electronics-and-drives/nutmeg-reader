@@ -7,14 +7,14 @@ import org.apache.commons.math3.complex.Complex;
 
 /**
  * Plot consisting of complex waveforms.
- *
  */
-public class NutmegComplexPlot extends NutmegPlot {
+public final class NutmegComplexPlot extends NutmegPlot {
 
   private final Map<String, Complex[]> waves;
 
-  private NutmegComplexPlot(final String plotname, final int noOfVariables, final int noOfPoints,
-      final String refWave, final Map<String, String> units, final Map<String, Complex[]> waves) {
+  private NutmegComplexPlot(final String plotname, final int noOfVariables,
+      final int noOfPoints, final String refWave,
+      final Map<String, String> units, final Map<String, Complex[]> waves) {
     super(plotname, noOfVariables, noOfPoints, refWave, units);
     this.waves = waves;
   }
@@ -24,20 +24,20 @@ public class NutmegComplexPlot extends NutmegPlot {
    * valid, a {@link edlab.eda.reader.nutmeg.NutmegComplexPlot
    * NutmegComplexPlot} is returned.
    * 
-   * @param plotname      - Name of the plot
-   * @param noOfVariables - Number of variables
-   * @param noOfPoints    - Number of points
-   * @param refWave       - Name of reference waveform
-   * @param units         - Units
-   * @param waves         - Waves
-   * @return nutmegRealPlot - Plot
+   * @param plotname      Name of the plot
+   * @param noOfVariables Number of variables
+   * @param noOfPoints    Number of points
+   * @param refWave       Name of reference waveform
+   * @param units         Units
+   * @param waves         Waves
+   * @return nutmegRealPlot
    */
-  public static NutmegComplexPlot make(final String plotname, final int noOfVariables,
-      final int noOfPoints, final String refWave, final Map<String, String> units,
-      final Map<String, Complex[]> waves) {
+  public static NutmegComplexPlot make(final String plotname,
+      final int noOfVariables, final int noOfPoints, final String refWave,
+      final Map<String, String> units, final Map<String, Complex[]> waves) {
 
-    final NutmegComplexPlot plot = new NutmegComplexPlot(plotname, noOfVariables,
-        noOfPoints, refWave, units, waves);
+    final NutmegComplexPlot plot = new NutmegComplexPlot(plotname,
+        noOfVariables, noOfPoints, refWave, units, waves);
 
     if ((noOfVariables != units.size()) || (noOfVariables != waves.size())) {
       return null;
@@ -68,7 +68,6 @@ public class NutmegComplexPlot extends NutmegPlot {
     }
 
     return plot;
-
   }
 
   /**

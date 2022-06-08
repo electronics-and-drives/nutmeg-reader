@@ -1,5 +1,6 @@
 package edlab.eda.reader.nutmeg;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
@@ -10,9 +11,9 @@ import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.text.translate.CharSequenceTranslator;
 
 /**
-
+ * Reader for binary Nutmeg files
  */
-public class NutbinReader extends NutReader {
+public final class NutbinReader extends NutReader {
 
   private byte[] data;
 
@@ -57,11 +58,11 @@ public class NutbinReader extends NutReader {
 
     final NutReader nutReader = new NutbinReader(file);
 
-    if (nutReader.getFile() == null) {
-      return null;
-    } else {
+    if (nutReader.getFile() instanceof File) {
       return nutReader;
     }
+
+    return null;
   }
 
   /**
@@ -78,11 +79,11 @@ public class NutbinReader extends NutReader {
 
     final NutReader nutReader = new NutbinReader(file, translator);
 
-    if (nutReader.getFile() == null) {
-      return null;
-    } else {
+    if (nutReader.getFile() instanceof File) {
       return nutReader;
     }
+
+    return null;
   }
 
   @Override
@@ -167,7 +168,6 @@ public class NutbinReader extends NutReader {
 
         str = new String(this.data, flagIdx[START],
             (flagIdx[STOP] - flagIdx[START]) + 1);
-        str = str.trim();
 
         if (str.equals(REAL_ID)) {
           flag = FLAG.REAL;
@@ -340,7 +340,6 @@ public class NutbinReader extends NutReader {
    * 
    * @param start   - index from which on the data array is searched.
    * @param pattern - array with pattern to be searched.
-   * @return index - index in data where the pattern starts
    */
   private int getNextPosition(final int start, final byte[] pattern) {
 
@@ -361,6 +360,7 @@ public class NutbinReader extends NutReader {
 
         if (this.data[i + j] != pattern[j]) {
           patternFound = false;
+          break;
         }
 
         j++;
@@ -372,6 +372,8 @@ public class NutbinReader extends NutReader {
         while (this.data[retval] == 32) {
           retval++;
         }
+        
+        break;
       }
 
       i++;
