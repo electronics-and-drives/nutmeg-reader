@@ -8,6 +8,9 @@ import java.util.Set;
  */
 public final class NutmegRealPlot extends NutmegPlot {
 
+  public static final String VCVS_REAL = "Re, Re";
+  public static final String VCVS_XY = "X, Y";
+
   private final Map<String, double[]> waves;
 
   private NutmegRealPlot(final String plotname, final int noOfVariables,
@@ -101,5 +104,114 @@ public final class NutmegRealPlot extends NutmegPlot {
   @Override
   public boolean isReal() {
     return true;
+  }
+
+  @Override
+  public String toVirtuosoCommaSeperatedValues() {
+
+    StringBuilder builder = new StringBuilder(VCVS_VERSION)
+        .append(VCVS_NEWLINE);
+
+    boolean first = true;
+
+    for (String waveName : this.getWaves()) {
+
+      if (!waveName.equals(this.getRefWave())) {
+
+        if (first) {
+          first = false;
+        } else {
+          builder.append(VCVS_SEP);
+        }
+
+        builder.append(VCVS_DELIM).append(waveName);
+      }
+    }
+
+    builder.append(VCVS_NEWLINE);
+
+    first = true;
+
+    for (int i = 0; i < this.getNoOfWaves() - 1; i++) {
+
+      if (first) {
+        first = false;
+      } else {
+        builder.append(VCVS_SEP);
+      }
+
+      builder.append(VCVS_DELIM).append(VCVS_XY);
+    }
+
+    builder.append(VCVS_NEWLINE);
+
+    first = true;
+
+    for (int i = 0; i < this.getNoOfWaves() - 1; i++) {
+
+      if (first) {
+        first = false;
+      } else {
+        builder.append(VCVS_SEP);
+      }
+
+      builder.append(VCVS_DELIM).append(VCVS_REAL);
+    }
+
+    builder.append(VCVS_NEWLINE);
+    first = true;
+
+    for (int i = 0; i < this.getNoOfWaves() - 1; i++) {
+
+      if (first) {
+        first = false;
+      } else {
+        builder.append(VCVS_SEP);
+      }
+
+      builder.append(VCVS_DELIM).append(this.getRefWave()).append(" ")
+          .append(VCVS_SEP).append("-");
+    }
+
+    builder.append(VCVS_NEWLINE);
+    first = true;
+
+    for (String waveName : this.getWaves()) {
+
+      if (!waveName.equals(this.getRefWave())) {
+
+        if (first) {
+          first = false;
+        } else {
+          builder.append(VCVS_SEP);
+        }
+
+        builder.append(VCVS_DELIM).append(this.getUnit(this.getRefWave()))
+            .append(" ").append(VCVS_SEP).append(this.getUnit(waveName));
+      }
+    }
+
+    for (int i = 0; i < this.getNoOfPoints(); i++) {
+
+      builder.append(VCVS_NEWLINE);
+      first = true;
+
+      for (String waveName : this.getWaves()) {
+
+        if (!waveName.equals(this.getRefWave())) {
+
+          if (first) {
+            first = false;
+          } else {
+            builder.append(VCVS_SEP);
+          }
+
+          builder.append(this.getWave(this.getRefWave())[i]).append(VCVS_SEP)
+              .append(this.getWave(waveName)[i]);
+        }
+      }
+    }
+
+    return builder.toString();
   }
 }
