@@ -15,8 +15,7 @@ class NutmegToVirtuosoCommaSepcertatedValuesTest {
     final String path = "./src/test/resources/rc1/spectre/nutascii.raw";
 
     // Create a new reader
-    final NutReader reader = NutReader
-        .getNutasciiReader("./src/test/resources/rc1/spectre/nutascii.raw");
+    final NutReader reader = NutReader.getNutasciiReader(path);
 
     if (reader.read() == null) {
       fail("Unable to read " + path);
@@ -28,7 +27,7 @@ class NutmegToVirtuosoCommaSepcertatedValuesTest {
 
     final List<NutmegPlot> plots = reader.getPlots();
 
-    for (NutmegPlot plot : plots) {   
+    for (NutmegPlot plot : plots) {
       plot.toVirtuosoCommaSeperatedValues();
     }
   }

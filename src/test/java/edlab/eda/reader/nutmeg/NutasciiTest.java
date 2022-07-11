@@ -22,8 +22,7 @@ public class NutasciiTest {
 
   private void readWave(final String path) {
     // Create a new reader
-    final NutReader reader = NutReader
-        .getNutasciiReader("./src/test/resources/rc1/spectre/nutascii.raw");
+    final NutReader reader = NutReader.getNutasciiReader(path);
 
     if (reader.read() == null) {
       fail("Unable to read " + path);
