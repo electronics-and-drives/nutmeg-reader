@@ -106,12 +106,12 @@ public final class NutmegComplexPlot extends NutmegPlot {
   @Override
   public String toVirtuosoCommaSeperatedValues() {
 
-    StringBuilder builder = new StringBuilder(VCVS_VERSION)
+    final StringBuilder builder = new StringBuilder(VCVS_VERSION)
         .append(VCVS_NEWLINE);
 
     boolean first = true;
 
-    for (String waveName : this.getWaves()) {
+    for (final String waveName : this.getWaves()) {
 
       if (!waveName.equals(this.getRefWave())) {
 
@@ -129,7 +129,7 @@ public final class NutmegComplexPlot extends NutmegPlot {
 
     first = true;
 
-    for (int i = 0; i < this.getNoOfWaves() - 1; i++) {
+    for (int i = 0; i < (this.getNoOfWaves() - 1); i++) {
 
       if (first) {
         first = false;
@@ -144,7 +144,7 @@ public final class NutmegComplexPlot extends NutmegPlot {
 
     first = true;
 
-    for (int i = 0; i < this.getNoOfWaves() - 1; i++) {
+    for (int i = 0; i < (this.getNoOfWaves() - 1); i++) {
 
       if (first) {
         first = false;
@@ -158,7 +158,7 @@ public final class NutmegComplexPlot extends NutmegPlot {
     builder.append(VCVS_NEWLINE);
     first = true;
 
-    for (int i = 0; i < this.getNoOfWaves() - 1; i++) {
+    for (int i = 0; i < (this.getNoOfWaves() - 1); i++) {
 
       if (first) {
         first = false;
@@ -173,7 +173,7 @@ public final class NutmegComplexPlot extends NutmegPlot {
     builder.append(VCVS_NEWLINE);
     first = true;
 
-    for (String waveName : this.getWaves()) {
+    for (final String waveName : this.getWaves()) {
 
       if (!waveName.equals(this.getRefWave())) {
 
@@ -193,7 +193,7 @@ public final class NutmegComplexPlot extends NutmegPlot {
       builder.append(VCVS_NEWLINE);
       first = true;
 
-      for (String waveName : this.getWaves()) {
+      for (final String waveName : this.getWaves()) {
 
         if (!waveName.equals(this.getRefWave())) {
 

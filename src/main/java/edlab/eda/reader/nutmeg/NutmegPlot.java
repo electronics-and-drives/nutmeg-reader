@@ -150,7 +150,7 @@ public abstract class NutmegPlot {
   public NutmegPlot toVirtuosoCommaSeperatedValues(final File file)
       throws IOException {
 
-    FileWriter writer = new FileWriter(file);
+    final FileWriter writer = new FileWriter(file);
 
     writer.write(this.toVirtuosoCommaSeperatedValues());
     writer.close();
