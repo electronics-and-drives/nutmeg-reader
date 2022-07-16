@@ -1,7 +1,7 @@
 function plots = parseNutmeg (obj)
-% parseNutmeg  Converts the plots from from the Java Nutmeg-Objects 
-%              in MATLAB datastructures.
-%  
+  % PARSENUTMEG Converts the plots from from the Java Nutmeg-Objects 
+  % in MATLAB datastructures.
+  %  
 
   plots = [];
 

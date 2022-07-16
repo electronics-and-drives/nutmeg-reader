@@ -126,7 +126,7 @@ public class NutbinReader extends NutReader {
     double[] realWave;
     Complex[] complexWave;
 
-    Complex complex;
+    double re, im;
 
     String[] line;
 
@@ -136,6 +136,8 @@ public class NutbinReader extends NutReader {
     HashMap<String, String> units;
     HashMap<String, double[]> realWaves;
     HashMap<String, Complex[]> complexWaves;
+
+    final ByteBuffer buffer = ByteBuffer.allocate(BYTES_PER_NUM);
 
     FLAG flag = FLAG.NONE;
 
@@ -246,10 +248,14 @@ public class NutbinReader extends NutReader {
               realWave = new double[noOfPoints];
 
               for (int j = 0; j < noOfPoints; j++) {
-                realWave[j] = ByteBuffer.wrap(this.data,
+
+                buffer.clear();
+                buffer.put(this.data,
                     (binaryStartIdx + ((i + (j * noOfVars)) * BYTES_PER_NUM))
                         - 1,
-                    BYTES_PER_NUM).getDouble();
+                    BYTES_PER_NUM);
+
+                realWave[j] = buffer.getDouble(0);
               }
 
               if (realWaves.containsKey(varNames[i])) {
@@ -280,19 +286,24 @@ public class NutbinReader extends NutReader {
               complexWave = new Complex[noOfPoints];
 
               for (int j = 0; j < noOfPoints; j++) {
-                complex = new Complex(
-                    ByteBuffer.wrap(this.data,
-                        (binaryStartIdx
-                            + (2 * (i + (j * noOfVars)) * BYTES_PER_NUM)) - 1,
-                        BYTES_PER_NUM).getDouble(),
-                    ByteBuffer
-                        .wrap(this.data,
-                            (binaryStartIdx
-                                + (2 * (i + (j * noOfVars)) * BYTES_PER_NUM)
-                                + BYTES_PER_NUM) - 1,
-                            BYTES_PER_NUM)
-                        .getDouble());
-                complexWave[j] = complex;
+
+                buffer.clear();
+                buffer.put(this.data,
+                    (binaryStartIdx
+                        + (2 * (i + (j * noOfVars)) * BYTES_PER_NUM)) - 1,
+                    BYTES_PER_NUM);
+
+                re = buffer.getDouble(0);
+
+                buffer.clear();
+                buffer.put(this.data,
+                    (binaryStartIdx + (2 * (i + (j * noOfVars)) * BYTES_PER_NUM)
+                        + BYTES_PER_NUM) - 1,
+                    BYTES_PER_NUM);
+
+                im = buffer.getDouble(0);
+
+                complexWave[j] = new Complex(re, im);
               }
 
               if (complexWaves.containsKey(varNames[i])) {
